@@ -1,0 +1,27 @@
+/* Master Styles */
+body { 
+  margin: 0;
+  background-color: #0079BF; 
+}
+body, input[text], button { 
+  color: #333; 
+}
+a {
+  cursor: pointer;
+  cursor: hand;
+}
+
+/* everywhere else */
+* { 
+  font-family: Arial, Helvetica, sans-serif; 
+}
+
+
+.btn {
+  line-height: 14px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 3px;
+  display: block;
+  padding: 8px;
+}

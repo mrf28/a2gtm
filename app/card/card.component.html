@@ -1,0 +1,10 @@
+<li class="card"
+  (click)="editCard()">
+    <span [innerHtml]="card.title" [style.display]="editingCard ? 'none' : ''">
+    </span>
+    <textarea
+        [style.display]="editingCard ? '' : 'none' "
+        (keydown)="blurOnEnter($event)"
+        (blur)="updateCard()"
+        [(ngModel)]="card.title" ></textarea>
+</li>

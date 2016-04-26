@@ -1,0 +1,43 @@
+.card {
+  background-color: #fff;   
+  text-decoration: none;
+  padding: 7px;
+  margin: 0 0 8px 0;
+  border-radius: 3px;
+  color: #4d4d4d;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  font-stretch: normal;
+  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  cursor: pointer;
+  white-space: normal;
+  list-style: none;
+  border-bottom: solid 1px #ccc;
+  transition: all;
+  transition-property: all;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+.card:hover{
+  background-color: #ddd;
+}
+
+.card textarea {
+    display: inherit;
+    width: 100%;
+    border: none;
+    line-height: 18px;
+    font-size: 14px;
+    resize: none;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    line-height: 18px;
+    margin: -2px;
+}

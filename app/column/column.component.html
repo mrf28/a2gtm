@@ -1,0 +1,29 @@
+<div class="column">
+    <div class="column-header">
+        <h4 [innerHtml]="column.title"
+            [style.display]="editingColumn ?'none' : '' "
+            (click)="editColumn()" ></h4>
+        <input  
+            [style.display]="editingColumn ?'' : 'none' "
+            (blur)="updateColumn()"
+            (keyup)="blurOnEnter($event)"
+            [(ngModel)]="column.title" />
+    </div>
+    <ul class="card-list">
+        <gtm-card *ngFor="#card of column.cards" [card]="card"></gtm-card>
+    </ul>
+        <div class="add-card" 
+            (click)="enableAddCard()" >
+            <span [style.display]="addingCard ? 'none' : ''"
+                (blur)="addCard()" >
+                Add a card...
+            </span>
+            
+            <input  
+            [style.display]="addingCard ? '' : 'none' "
+            [attr.autofocus]="addingCard"
+            (keyup)="blurOnEnter($event)"
+            (blur)="addCard(column)"
+            [(ngModel)]="addCardText" />
+        </div>
+</div>
