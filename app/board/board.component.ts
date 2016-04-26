@@ -16,7 +16,7 @@ export class BoardComponent implements OnInit {
     constructor(private _boardService: BoardService){}
     
     ngOnInit(){
-        this.columns = this._boardService.getColumns();
+        this.columns = this._boardService.getColumns('randomid');
         document.title = this.title + " | Generic Task Manager"
     }    
  }

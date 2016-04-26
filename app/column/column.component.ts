@@ -1,6 +1,8 @@
 import {Component, Input, OnInit, ElementRef} from 'angular2/core';
 import {Column} from './column';
+import {Card} from '../card/card';
 import {CardComponent} from '../card/card.component'
+import {BoardService} from '../board/board.service';
 
 @Component({
     selector: 'gtm-column',
@@ -16,7 +18,7 @@ export class ColumnComponent implements OnInit {
     addCardText: string;
     currentTitle: string;
 
-    constructor(public el: ElementRef){}
+    constructor(private el: ElementRef, private _boardService: BoardService) { }
 
     ngOnInit(){
     }
@@ -28,7 +30,9 @@ export class ColumnComponent implements OnInit {
     } 
 
     updateColumn() {
-        if (this.column.title && this.column.title.trim() !== '') {
+        if (this.column.title && this.column.title.trim() !== '') 
+        {
+            this._boardService.updateColumn(this.column);
             this.editingColumn = false;
         } else {
             this.column.title = this.currentTitle;
@@ -57,7 +61,9 @@ export class ColumnComponent implements OnInit {
 
     addCard(parent: Column) {
         if (this.addCardText && this.addCardText.trim() !== ''){
-            parent.cards.push({ title: this.addCardText, order: parent.cards.length + 1 });
+            let newCard = <Card>{ title: this.addCardText, order: parent.cards.length + 1, columnId: parent.id };
+            parent.cards.push(newCard);
+            this._boardService.addCard(newCard, this.column);
         }
         this.clearAddCard();
     }
