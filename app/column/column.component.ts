@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, AfterViewInit, ElementRef} from 'angular2/core';
+import {Component, Input, OnInit, AfterViewInit, ElementRef, EventEmitter} from 'angular2/core';
 import {Column} from './column';
 import {Card} from '../card/card';
 import {CardComponent} from '../card/card.component'
@@ -20,7 +20,12 @@ export class ColumnComponent implements OnInit {
     addCardText: string;
     currentTitle: string;
 
-    constructor(private el: ElementRef, private _boardService: BoardService) { }
+    public cardReorder: EventEmitter<any>;
+
+    constructor(private el: ElementRef, private _boardService: BoardService) { 
+        this.cardReorder = new EventEmitter();
+        this.cardReorder.subscribe(event => this.updateCardsOrder(event));
+    }
 
     ngOnInit(){
    
@@ -28,6 +33,7 @@ export class ColumnComponent implements OnInit {
 
     ngAfterViewInit(){
       let component = this;
+      var startColumn;
       jQuery('.card-list').sortable({
         connectWith: ".card-list",
         placeholder: "card-placeholder",
@@ -35,19 +41,29 @@ export class ColumnComponent implements OnInit {
         tolerance: 'pointer',
         start: function(event, ui) {
           ui.placeholder.height(ui.item.outerHeight());
+          startColumn = ui.item.parent();
         },
         stop: function(event, ui) {
-          component.updateCardOrder(event, ui);
+            var senderColumnId = +startColumn.attr('column-id');
+            var targetColumnId = +ui.item.closest('.card-list').attr('column-id');
+            var cardId = +ui.item.find('.card').attr('card-id');
+            var index = component.findCardIndex(cardId, ui.item.closest('.card-list'));
+
+            component.cardReorder.emit({
+                senderColumnId: senderColumnId,
+                targetColumnId: targetColumnId,
+                cardId: cardId,
+                index: index,
+                boardId: component.column.boardId
+            });
         }
       });
       jQuery('.card-list').disableSelection();     
     }
 
-    updateCardOrder(event, ui){
-        var senderColumnId = ui//.sender//.context.getAttribute('column-id');
-        var targetColumnId = +ui.item.closest('.card-list').attr('column-id');
-        var cardId = +ui.item.find('.card').attr('card-id');
-        console.log(senderColumnId, targetColumnId, cardId);
+    updateCardsOrder(event){
+        console.log(event);
+        this._boardService.reorderCard(event.cardId, event.targetColumnId, event.senderColumnId, event.index, event.boardId);
     }
 
     blurOnEnter(event) {
@@ -98,5 +114,16 @@ export class ColumnComponent implements OnInit {
     clearAddCard(){
         this.addingCard = false;
         this.addCardText = '';
+    }
+
+    private findCardIndex(cardId, columnEl){
+        let i = 0;
+        for (i = 0; i < columnEl.find('.card').length - 1; i++) {
+            if (columnEl.find('.card')[i].getAttribute('card-id') == cardId){
+                return i;
+            }
+         } 
+
+        return i;
     }
 }
