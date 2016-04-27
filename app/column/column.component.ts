@@ -62,7 +62,10 @@ export class ColumnComponent implements OnInit {
     }
 
     updateCardsOrder(event){
-        console.log(event);
+        let card = this._boardService.getCard(event.cardId);
+        card.columnId = event.targetColumnId;
+        card.order = event.index;
+        this._boardService.updateCard(card);
         this._boardService.reorderCard(event.cardId, event.targetColumnId, event.senderColumnId, event.index, event.boardId);
     }
 
@@ -105,7 +108,7 @@ export class ColumnComponent implements OnInit {
     addCard(parent: Column) {
         if (this.addCardText && this.addCardText.trim() !== ''){
             let newCard = <Card>{ title: this.addCardText, order: parent.cards.length + 1, columnId: parent.id };
-            parent.cards.push(newCard);
+            //parent.cards.push(newCard);
             this._boardService.addCard(newCard, this.column);
         }
         this.clearAddCard();

@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from 'angular2/core';
+import {Injectable} from 'angular2/core';
 import {Board} from '../board/board';
 import {Column} from '../column/column';
 import {Card} from '../card/card';
@@ -36,7 +36,7 @@ var DEFAULT_BOARD: Board = {
 };
 
 @Injectable()
-export class BoardService implements OnInit {
+export class BoardService {
 	private lastColumnId: number;
 	private lastCardId: number;
 	private Boards: Board[];
@@ -57,10 +57,6 @@ export class BoardService implements OnInit {
 		this.lastCardId = this.countCards();
 	}
 
-	ngOnInit() {
-		console.log('service on init');
-	}
-
 	getBoards(boardId: string) {
 		
 		return this.Boards;
@@ -74,6 +70,18 @@ export class BoardService implements OnInit {
 	getColumns(boardId: string){
 		let board = this.Boards.filter(board => board.id === boardId)[0];
 		return board.columns;
+	}
+
+	getCard(cardId: number){
+		for (let b in this.Boards){
+			for(let c in this.Boards[b].columns){
+				for (let card in this.Boards[b].columns[c].cards){
+          if (this.Boards[b].columns[c].cards[card].id === cardId){
+            return this.Boards[b].columns[c].cards[card];
+          }
+				}
+			}
+		}
 	}
 
 	addColumn(column: Column){
@@ -116,13 +124,7 @@ export class BoardService implements OnInit {
 	}
 
 	updateCard(card: Card) {
-		let col = this.findColumnById(card.columnId, this.Boards);
-
-		let board = this.Boards.filter(board => board.id === col.boardId)[0];
-
-		let column = board.columns.filter(x => x.id === card.columnId)[0];
-		
-		let c = column.cards.filter(x => x.id === card.id)[0];
+    let c = this.getCard(card.id);
 
 		c.title = card.title;
 		c.order = card.order;
@@ -145,7 +147,9 @@ export class BoardService implements OnInit {
 				targetColumn = board.columns[c];
 			}
 		}
-		
+
+    targetColumn = targetColumn || senderColumn;
+
 		let i = 0;
 		if (targetColumnId !== senderColumnId){
 			let currentCard: Card;
@@ -166,12 +170,20 @@ export class BoardService implements OnInit {
 			senderColumn.cards.splice(currentCard.order, 1);
 
 			targetColumn.cards.splice(index, 0, currentCard);
+		} else {
+      for (i = targetColumn.cards.length - 1; i >= 0; i--) {
+        let card = targetColumn.cards[i];
+        if (card.id === cardId) {
+          targetColumn.cards.splice(index, 0, targetColumn.cards.splice(i, 1)[0]);
+        }
+			}
 		}
+		
 		i = 0;
 		for (let c in targetColumn.cards) {
 			let card = targetColumn.cards[c];
 			card.order = i++;
-		}
+    }
 
 		localStorage.setItem("boards", JSON.stringify(this.Boards));
 	}

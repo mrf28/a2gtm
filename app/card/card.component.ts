@@ -34,12 +34,11 @@ export class CardComponent {
     }
 
     updateCard() {
-        if (this.card.title && this.card.title.trim() !== ''){
-            this._boardService.updateCard(this.card);
-        } else {
-            this.card.title = this.currentTitle;
+        if (!this.card.title || this.card.title.trim() === ''){
+          this.card.title = this.currentTitle;
         }
 
+        this._boardService.updateCard(this.card);
         this.editingCard = false;
     }
 

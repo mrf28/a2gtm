@@ -2,6 +2,10 @@
   "name": "a2gtm",
   "version": "1.0.0",
   "description": "Generic task manager built over angular2",
+  "engines": {
+    "node": "0.12.7",
+    "npm": "2.11.3"
+  },
   "scripts": {
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "docker-build": "docker build -t ng2-quickstart .",
