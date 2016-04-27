@@ -1,7 +1,17 @@
 <h2>{{ title }}</h2>
 <section id="main">
-  <div *ngFor="#column of columns">
+  <div *ngFor="#column of board.columns" class="sortable-column">
     <gtm-column [column]="column">
     </gtm-column>
+  </div>
+  <div class="add-column"
+       (click)="enableAddColumn()" >
+  	<span [style.display]="addingColumn ? 'none' : ''" >Add a list...</span>
+   
+    <input  
+	    [style.display]="addingColumn ? '' : 'none' "
+	    (keyup)="blurOnEnter($event)"
+	    (blur)="addColumn(board)"
+	    [(ngModel)]="addColumnText" />
   </div>
 </section>

@@ -12,3 +12,37 @@ h2 {
   color: white;
 }
 
+.add-column {
+  width: 280px;
+  height: 40px;
+  background-color: #0067A3;
+  border-radius: 3px; 
+  width: 270px;
+  margin-left: 10px;
+  padding: 2px;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.add-column span {
+	color: rgba(255,255,255,.7);
+	line-height: 40px;
+	vertical-align: middle;
+	padding: 7px;
+	font-size: 14px;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.add-column input {	
+	width: 100%;
+	height: 100%;
+	font-weight: 700;
+	border: none;
+	line-height: 18px;
+	padding: 3px 5px 4px 5px;
+}
