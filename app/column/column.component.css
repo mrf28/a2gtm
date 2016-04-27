@@ -17,6 +17,7 @@
   font-weight: 700;
   line-height: 18px;
   font-size: 14px;
+  margin-bottom: 3px;
   cursor: pointer;
 }
 
@@ -28,7 +29,7 @@
   font-size: 14px;
   border: none;
   border-radius: 3px;
-  margin-bottom: 15px;
+  margin-bottom: -4px;
   padding: 3px 5px 4px 5px;
   width: calc(100% - 10px);
 }
@@ -37,7 +38,7 @@
   color: #999;
   font-size: 14px;
   line-height: 18px;
-  margin-top: 10px;
+  margin-top: 0;
   padding: 8px 10px;
   cursor: pointer;
 
@@ -64,9 +65,9 @@
   width: calc(100% - 10px);
 }
 
-ul.card-list {
-  padding: 0 11px 0 9px;
-  margin: -12px 0 8px 0;
+ul.card-list {  
+  padding: 31px 11px 32px 9px;
+  margin: -26px 0 -31px 0;
 }
 
 ul.card-list > li{

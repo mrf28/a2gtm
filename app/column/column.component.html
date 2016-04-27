@@ -1,4 +1,4 @@
-<div class="column">
+<div class="column" >
     <div class="column-header">
         <h4 [innerHtml]="column.title"
             [style.display]="editingColumn ?'none' : '' "
@@ -9,8 +9,10 @@
             (keyup)="blurOnEnter($event)"
             [(ngModel)]="column.title" />
     </div>
-    <ul class="card-list">
-        <gtm-card *ngFor="#card of column.cards" [card]="card"></gtm-card>
+    <ul class="card-list" [attr.column-id]="column.id">
+        <li *ngFor="#card of column.cards">
+            <gtm-card [card]="card"></gtm-card>
+        </li>
     </ul>
         <div class="add-card" 
             (click)="enableAddCard()" >

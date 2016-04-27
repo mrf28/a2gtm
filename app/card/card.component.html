@@ -1,4 +1,4 @@
-<li class="card"
+<li class="card" [attr.card-id]="card.id"
   (click)="editCard()">
     <span [innerHtml]="card.title" [style.display]="editingCard ? 'none' : ''">
     </span>

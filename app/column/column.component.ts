@@ -1,8 +1,10 @@
-import {Component, Input, OnInit, ElementRef} from 'angular2/core';
+import {Component, Input, OnInit, AfterViewInit, ElementRef} from 'angular2/core';
 import {Column} from './column';
 import {Card} from '../card/card';
 import {CardComponent} from '../card/card.component'
 import {BoardService} from '../board/board.service';
+
+declare var jQuery: any;
 
 @Component({
     selector: 'gtm-column',
@@ -21,6 +23,31 @@ export class ColumnComponent implements OnInit {
     constructor(private el: ElementRef, private _boardService: BoardService) { }
 
     ngOnInit(){
+   
+    }
+
+    ngAfterViewInit(){
+      let component = this;
+      jQuery('.card-list').sortable({
+        connectWith: ".card-list",
+        placeholder: "card-placeholder",
+        dropOnEmpty: true,
+        tolerance: 'pointer',
+        start: function(event, ui) {
+          ui.placeholder.height(ui.item.outerHeight());
+        },
+        stop: function(event, ui) {
+          component.updateCardOrder(event, ui);
+        }
+      });
+      jQuery('.card-list').disableSelection();     
+    }
+
+    updateCardOrder(event, ui){
+        var senderColumnId = ui//.sender//.context.getAttribute('column-id');
+        var targetColumnId = +ui.item.closest('.card-list').attr('column-id');
+        var cardId = +ui.item.find('.card').attr('card-id');
+        console.log(senderColumnId, targetColumnId, cardId);
     }
 
     blurOnEnter(event) {

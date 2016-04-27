@@ -1,5 +1,7 @@
 <h2>{{ title }}</h2>
-<section #main>
-    <gtm-column *ngFor="#column of columns" [column]="column">
+<section id="main">
+  <div *ngFor="#column of columns">
+    <gtm-column [column]="column">
     </gtm-column>
+  </div>
 </section>

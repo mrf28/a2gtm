@@ -6,25 +6,25 @@ import {Card} from '../card/card';
 var DEFAULT_COLUMNS: Column[] = [
     {
     	id: 1,
-		title: "To do", 
-		boardId: "randomid",
-		order: 0, 
-		cards: [
-			{ id: 1, title: "This is a card.", order: 0 }
-		]
-	},
+			title: "To do", 
+			boardId: "randomid",
+			order: 0, 
+			cards: [
+				{ id: 1, title: "This is a card.", order: 0, columnId: 1 }
+			]
+		},
     { 
     	id: 2, 
     	title: "Doing", 
-		boardId: "randomid",
-		order: 1, 
+			boardId: "randomid",
+			order: 1, 
 	    cards: [] 
-	},
+		},
     { 
-		id: 3,
+			id: 3,
     	title: "Done", 
-		boardId: "randomid",
-		order: 2, 
+			boardId: "randomid",
+			order: 2, 
     	cards: [] 
     },
 ];
@@ -46,6 +46,9 @@ export class BoardService {
 
 		if (!localStorage.hasOwnProperty("boards")) {
 			localStorage.setItem('boards', JSON.stringify([DEFAULT_BOARD]));
+		} else {
+      this.lastColumnId = this.countColumns();
+      this.lastCardId = this.countCards();
 		}
 	}
 
@@ -196,4 +199,16 @@ export class BoardService {
 	private getBoardsLocal(): Board[]{
 		return <Board[]>JSON.parse(localStorage.getItem("boards"));
 	}
+
+	private countCards(): number{
+    let i = 0;
+    this.getBoardsLocal().filter(x => !!x.columns.filter(y => !!y.cards.filter(z => !!i++)));
+    return i;
+	}
+
+	private countColumns(): number {
+    let i = 0;
+    this.getBoardsLocal().filter(x => !!x.columns.filter(y => !!i++));
+    return i;
+  }
 }
