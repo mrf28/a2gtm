@@ -7,13 +7,14 @@
     "npm": "2.11.3"
   },
   "scripts": {
-    "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
-    "docker-build": "docker build -t ng2-quickstart .",
+    "start": "lite-server",
+    "debug": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
+    "docker-build": "docker build -t a2gtm .",
     "docker": "npm run docker-build && docker run -it --rm -p 3000:3000 -p 3001:3001 ng2-quickstart",
     "e2e": "tsc && concurrently \"http-server\" \"protractor protractor.config.js\"",
     "lite": "lite-server",
     "preinstall": "npm i typings -g",
-    "postinstall": "typings install",
+    "postinstall": "typings install && tsc",
     "test": "tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
