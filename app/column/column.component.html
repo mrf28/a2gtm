@@ -1,4 +1,4 @@
-<div class="column" >
+<div class="column" [attr.column-id]="column.id">
     <div class="column-header">
         <h4 [innerHtml]="column.title"
             [style.display]="editingColumn ?'none' : '' "

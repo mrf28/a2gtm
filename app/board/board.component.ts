@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, AfterViewInit, ElementRef} from 'angular2/core';
+import {Component, Input, OnInit, AfterViewInit, ElementRef, EventEmitter} from 'angular2/core';
 import {Board} from '../board/board';
 import {Column} from '../column/column';
 import {BoardService} from './board.service';
@@ -18,27 +18,62 @@ export class BoardComponent implements OnInit {
     board: Board;
     addingColumn = false;
     addColumnText: string;
-    constructor(public el: ElementRef, private _boardService: BoardService){}
-    
+
+    public columnReorder: EventEmitter<any>;
+
+    constructor(public el: ElementRef, private _boardService: BoardService){
+        this.columnReorder = new EventEmitter();
+        this.columnReorder.subscribe(event => this.updateColumnOrder(event));
+    }
+   
+
     ngOnInit(){
         this.board = this._boardService.getBoard('randomid');
         document.title = this.title + " | Generic Task Manager";
     }
 
     ngAfterViewInit(){
-      jQuery('#main').sortable({
-        items: '.sortable-column',
-        handler: '.header',
-        connectWith: "#main",
-        placeholder: "column-placeholder",
-        dropOnEmpty: true,
-        tolerance: 'pointer',
-        start: function(event, ui) {
-          ui.placeholder.height(ui.item.find('.column').outerHeight());
-        },
-      });
+        let component = this;
+        var startColumn;
+        jQuery('#main').sortable({
+            items: '.sortable-column',
+            handler: '.header',
+            connectWith: "#main",
+            placeholder: "column-placeholder",
+            dropOnEmpty: true,
+            tolerance: 'pointer',
+            start: function(event, ui) {
+                ui.placeholder.height(ui.item.find('.column').outerHeight());
+                startColumn = ui.item.parent();
+            },
+            stop: function(event, ui){
+                var columnId = +ui.item.find('.column').attr('column-id');
+                var index = component.findColumnIndex(columnId);
+
+                component.columnReorder.emit({
+                    columnId: columnId,
+                    index: index,
+                    boardId: component.board.id
+                });
+            }
+        });
       jQuery('#main').disableSelection();     
-    }    
+    }
+
+    updateColumnOrder(event){
+        this._boardService.reorderColumn(event.columnId, event.index, event.boardId);
+    }
+
+    private findColumnIndex(columnId) {
+        let i = 0, columnEl = jQuery('#main');
+        for (i = 0; i < columnEl.find('.column').length - 1; i++) {
+            if (columnEl.find('.column')[i].getAttribute('column-id') == columnId) {
+                return i;
+            }
+        }
+
+        return i;
+    }
 
     blurOnEnter(event) {
         if (event.keyCode === 13) {
@@ -62,7 +97,7 @@ export class BoardComponent implements OnInit {
                  boardId: this.board.id,
                  cards: []
              };
-            this.board.columns.push(newColumn);
+            //this.board.columns.push(newColumn);
             this._boardService.addColumn(newColumn);
         }
         this.clearAddColumn();

@@ -135,6 +135,19 @@ export class BoardService {
 		return true;
 	}
 
+	reorderColumn(columnId, index, boardId) {
+		let board = this.Boards.filter(x => x.id === boardId)[0];
+
+		for (let i = board.columns.length - 1; i >= 0; i--) {
+			let column = board.columns[i];
+			if (column.id === columnId) {
+				board.columns.splice(index, 0, board.columns.splice(i, 1)[0]);
+			}
+		}
+		
+		localStorage.setItem("boards", JSON.stringify(this.Boards));
+	}
+
 	reorderCard(cardId, targetColumnId, senderColumnId, index, boardId) {
 		let board = this.Boards.filter(x => x.id === boardId)[0];
 		let senderColumn: Column;
@@ -148,7 +161,7 @@ export class BoardService {
 			}
 		}
 
-    targetColumn = targetColumn || senderColumn;
+	    targetColumn = targetColumn || senderColumn;
 
 		let i = 0;
 		if (targetColumnId !== senderColumnId){
@@ -171,11 +184,11 @@ export class BoardService {
 
 			targetColumn.cards.splice(index, 0, currentCard);
 		} else {
-      for (i = targetColumn.cards.length - 1; i >= 0; i--) {
-        let card = targetColumn.cards[i];
-        if (card.id === cardId) {
-          targetColumn.cards.splice(index, 0, targetColumn.cards.splice(i, 1)[0]);
-        }
+      		for (i = targetColumn.cards.length - 1; i >= 0; i--) {
+		        let card = targetColumn.cards[i];
+		        if (card.id === cardId) {
+		          targetColumn.cards.splice(index, 0, targetColumn.cards.splice(i, 1)[0]);
+		        }
 			}
 		}
 		
@@ -183,7 +196,7 @@ export class BoardService {
 		for (let c in targetColumn.cards) {
 			let card = targetColumn.cards[c];
 			card.order = i++;
-    }
+	    }
 
 		localStorage.setItem("boards", JSON.stringify(this.Boards));
 	}
