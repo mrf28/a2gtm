@@ -84,6 +84,10 @@ export class BoardService {
 		}
 	}
 
+	updateBoard(board: Board){
+		localStorage.setItem("boards", JSON.stringify(this.Boards));
+	}
+
 	addColumn(column: Column){
 		let board = this.Boards.filter(board => board.id === column.boardId)[0];
 		column.id = ++this.lastColumnId;
@@ -144,7 +148,7 @@ export class BoardService {
 				board.columns.splice(index, 0, board.columns.splice(i, 1)[0]);
 			}
 		}
-		
+
 		localStorage.setItem("boards", JSON.stringify(this.Boards));
 	}
 

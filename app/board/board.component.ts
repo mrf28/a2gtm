@@ -14,10 +14,11 @@ declare var jQuery: any;
     providers: [BoardService]
 })
 export class BoardComponent implements OnInit {
-    title: string = "This is a board";
     board: Board;
     addingColumn = false;
     addColumnText: string;
+    editingTilte = false;
+    currentTitle: string;
 
     public columnReorder: EventEmitter<any>;
 
@@ -29,7 +30,7 @@ export class BoardComponent implements OnInit {
 
     ngOnInit(){
         this.board = this._boardService.getBoard('randomid');
-        document.title = this.title + " | Generic Task Manager";
+        document.title = this.board.title + " | Generic Task Manager";
     }
 
     ngAfterViewInit(){
@@ -60,20 +61,30 @@ export class BoardComponent implements OnInit {
       jQuery('#main').disableSelection();     
     }
 
+    updateBoard(){
+        if (this.board.title && this.board.title.trim() !== '') {
+            this._boardService.updateBoard(this.board);
+        } else {
+            this.board.title = this.currentTitle;
+        }
+        this.editingTilte = false;
+    }
+
+    editTitle(){
+        this.currentTitle = this.board.title;
+        this.editingTilte = true;
+
+        let input = this.el.nativeElement
+            .getElementsByClassName('board-title')[0]
+            .getElementsByTagName('input')[0];
+
+        setTimeout(function() { input.focus(); }, 0);
+    }
+
     updateColumnOrder(event){
         this._boardService.reorderColumn(event.columnId, event.index, event.boardId);
     }
 
-    private findColumnIndex(columnId) {
-        let i = 0, columnEl = jQuery('#main');
-        for (i = 0; i < columnEl.find('.column').length - 1; i++) {
-            if (columnEl.find('.column')[i].getAttribute('column-id') == columnId) {
-                return i;
-            }
-        }
-
-        return i;
-    }
 
     blurOnEnter(event) {
         if (event.keyCode === 13) {
@@ -106,5 +117,17 @@ export class BoardComponent implements OnInit {
     clearAddColumn() {
         this.addingColumn = false;
         this.addColumnText = '';
+    }
+
+
+    private findColumnIndex(columnId) {
+        let i = 0, columnEl = jQuery('#main');
+        for (i = 0; i < columnEl.find('.column').length - 1; i++) {
+            if (columnEl.find('.column')[i].getAttribute('column-id') == columnId) {
+                return i;
+            }
+        }
+
+        return i;
     }
  }

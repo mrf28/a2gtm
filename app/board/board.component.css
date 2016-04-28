@@ -3,13 +3,25 @@
   height: calc(100% - 100px);
 }
 
-h2 {
+
+.board-title {
   margin-left: 18px;
   margin-top: 10px;
   margin-bottom: 15px;
+}
+
+.board-title span {
   font-size: 18px;
   font-weight: bold;
   color: white;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.board-title input {
+    margin: -3px -2px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .add-column {

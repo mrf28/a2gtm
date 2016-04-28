@@ -1,4 +1,13 @@
-<h2>{{ title }}</h2>
+<div class="board-title">
+  <span [style.display]="editingTilte ? 'none' : ''" (click)="editTitle()">{{ board.title }}</span>
+
+  <input  
+    [style.display]="editingTilte ? '' : 'none' "
+    (keyup)="blurOnEnter($event)"
+    (blur)="updateBoard()"
+    [(ngModel)]="board.title" />  
+</div>
+
 <section id="main">
   <div *ngFor="#column of board.columns" class="sortable-column">
     <gtm-column [column]="column">
