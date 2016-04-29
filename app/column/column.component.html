@@ -23,7 +23,7 @@
             <input  
             [style.display]="addingCard ? '' : 'none' "
             [attr.autofocus]="addingCard"
-            (keyup)="blurOnEnter($event)"
+            (keyup)="addCardOnEnter($event)"
             (blur)="addCard(column)"
             [(ngModel)]="addCardText" />
         </div>

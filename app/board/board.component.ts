@@ -22,18 +22,18 @@ export class BoardComponent implements OnInit {
 
     public columnReorder: EventEmitter<any>;
 
-    constructor(public el: ElementRef, private _boardService: BoardService){
+    constructor(public el: ElementRef, private _boardService: BoardService) {
         this.columnReorder = new EventEmitter();
         this.columnReorder.subscribe(event => this.updateColumnOrder(event));
     }
-   
 
-    ngOnInit(){
+
+    ngOnInit() {
         this.board = this._boardService.getBoard('randomid');
         document.title = this.board.title + " | Generic Task Manager";
     }
 
-    ngAfterViewInit(){
+    ngAfterViewInit() {
         let component = this;
         var startColumn;
         jQuery('#main').sortable({
@@ -47,7 +47,7 @@ export class BoardComponent implements OnInit {
                 ui.placeholder.height(ui.item.find('.column').outerHeight());
                 startColumn = ui.item.parent();
             },
-            stop: function(event, ui){
+            stop: function(event, ui) {
                 var columnId = +ui.item.find('.column').attr('column-id');
                 var index = component.findColumnIndex(columnId);
 
@@ -58,10 +58,10 @@ export class BoardComponent implements OnInit {
                 });
             }
         });
-      jQuery('#main').disableSelection();     
+              jQuery('#main').disableSelect;     
     }
 
-    updateBoard(){
+    updateBoard() {
         if (this.board.title && this.board.title.trim() !== '') {
             this._boardService.updateBoard(this.board);
         } else {
@@ -71,7 +71,7 @@ export class BoardComponent implements OnInit {
         document.title = this.board.title + " | Generic Task Manager";
     }
 
-    editTitle(){
+    editTitle() {
         this.currentTitle = this.board.title;
         this.editingTilte = true;
 
@@ -82,7 +82,7 @@ export class BoardComponent implements OnInit {
         setTimeout(function() { input.focus(); }, 0);
     }
 
-    updateColumnOrder(event){
+    updateColumnOrder(event) {
         this._boardService.reorderColumn(event.columnId, event.index, event.boardId);
     }
 
@@ -91,7 +91,7 @@ export class BoardComponent implements OnInit {
         if (event.keyCode === 13) {
             event.target.blur();
         }
-    } 
+    }
 
     enableAddColumn() {
         this.addingColumn = true;
@@ -104,11 +104,12 @@ export class BoardComponent implements OnInit {
 
     addColumn() {
         if (this.addColumnText && this.addColumnText.trim() !== '') {
-            let newColumn = <Column>{ title: this.addColumnText,
-                 order: this.board.columns.length + 1, 
-                 boardId: this.board.id,
-                 cards: []
-             };
+            let newColumn = <Column>{
+                title: this.addColumnText,
+                order: this.board.columns.length + 1,
+                boardId: this.board.id,
+                cards: []
+            };
             //this.board.columns.push(newColumn);
             this._boardService.addColumn(newColumn);
         }
@@ -131,4 +132,4 @@ export class BoardComponent implements OnInit {
 
         return i;
     }
- }
+}

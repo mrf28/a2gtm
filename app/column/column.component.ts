@@ -75,6 +75,17 @@ export class ColumnComponent implements OnInit {
         }
     } 
 
+    addCardOnEnter(event){
+        if (event.keyCode === 13) {
+            if (this.addCardText && this.addCardText.trim() !== '') {
+                let newCard = <Card>{ title: this.addCardText, order: this.column.cards.length + 1, columnId: this.column.id };
+                
+                this._boardService.addCard(newCard, this.column);
+                this.addCardText = '';
+            }
+        }
+    }
+
     updateColumn() {
         if (this.column.title && this.column.title.trim() !== '') 
         {
