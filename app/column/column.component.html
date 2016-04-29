@@ -6,7 +6,7 @@
         <input  
             [style.display]="editingColumn ?'' : 'none' "
             (blur)="updateColumn()"
-            (keyup)="blurOnEnter($event)"
+            (keyup)="addColumnOnEnter($event)"
             [(ngModel)]="column.title" />
     </div>
     <ul class="card-list" [attr.column-id]="column.id">

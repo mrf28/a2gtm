@@ -19,7 +19,7 @@
    
     <input  
 	    [style.display]="addingColumn ? '' : 'none' "
-	    (keyup)="blurOnEnter($event)"
+	    (keyup)="addColumnOnEnter($event)"
 	    (blur)="addColumn(board)"
 	    [(ngModel)]="addColumnText" />
   </div>

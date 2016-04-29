@@ -1,6 +1,7 @@
 #main {
-  width: 100%;
-  height: calc(100% - 100px);
+  min-width: 100%;
+  /*height: calc(100% - 90px);*/
+  overflow: auto;
 }
 
 

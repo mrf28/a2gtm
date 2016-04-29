@@ -19,6 +19,9 @@ export class CardComponent {
     blurOnEnter(event) {
         if (event.keyCode === 13) {
             event.target.blur();
+        } else if (event.keyCode === 27) {
+          this.card.title = this.currentTitle;
+          this.editingCard = false;
         }
     } 
     
