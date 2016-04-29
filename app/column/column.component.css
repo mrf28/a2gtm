@@ -1,6 +1,6 @@
 .column {
   background-color: #E2E4E6;
-  border-radius: 3px; 
+  border-radius: 3px;
   width: 270px;
   margin-left: 10px;
   box-sizing: border-box;
@@ -8,7 +8,6 @@
   vertical-align: top;
   white-space: nowrap;
 }
-
 .column h4 {
   color: #4d4d4d;
   line-height: 100%;
@@ -21,12 +20,10 @@
   cursor: pointer;
   cursor: hand;
 }
-
 .column-header {
   cursor: pointer;
   cursor: hand;
 }
-
 .column .column-header input {
   margin-left: 5px;
   margin-top: 5px;
@@ -36,10 +33,9 @@
   padding: 3px 5px 4px 5px;
   font-size: 14px;
   border-radius: 3px;
-  margin-bottom: -4px;
+  margin-bottom: -1px;
   width: calc(100% - 10px);
 }
-
 .add-card {
   color: #999;
   font-size: 14px;
@@ -47,20 +43,17 @@
   margin-top: 0;
   padding: 8px 10px;
   cursor: pointer;
-
   transition-property: all;
   transition-duration: 150ms;
   transition-timing-function: ease;
 }
-
-.add-card:hover{
+.add-card:hover {
   text-decoration: underline;
   color: #666;
   background-color: #ccc;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 }
-
 .add-card input {
   margin-left: -5px;
   line-height: 18px;
@@ -70,12 +63,10 @@
   padding: 5px 5px 4px 5px;
   width: calc(100% - 10px);
 }
-
-ul.card-list {  
+ul.card-list {
   padding: 31px 11px 32px 9px;
   margin: -26px 0 -31px 0;
 }
-
-ul.card-list > li{
-  list-style: none;  
+ul.card-list > li {
+  list-style: none;
 }
