@@ -39,7 +39,8 @@ export class BoardComponent implements OnInit {
     document.getElementById('main').style.width = this.boardWidth + 'px';
 
     if (this.columnsAdded > 0) {
-      document.body.scrollLeft = document.body.scrollWidth;
+      let wrapper = document.getElementById('content-wrapper');
+      wrapper.scrollLeft = wrapper.scrollWidth;
     }
 
     this.columnsAdded++;

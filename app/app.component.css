@@ -23,3 +23,10 @@ nav a.logo{
   text-align: center;
   margin-top: -30px;
 }
+
+
+#content-wrapper {
+  width: 100%;
+  height: calc(100% - 40px);
+  overflow: auto;
+}
