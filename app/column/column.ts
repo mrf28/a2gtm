@@ -1,7 +1,7 @@
 import {Card} from '../card/card';
 
 export class Column {
-	id: number;
+	  _id: string;
     title: string;
     boardId: string;
     order: number;

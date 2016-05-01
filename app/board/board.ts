@@ -1,7 +1,7 @@
 import {Column} from '../column/column';
 
 export class Board {
-	id: string;
+	_id: string;
 	title: string;
 	columns: Column[];
 }

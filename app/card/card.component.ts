@@ -1,7 +1,7 @@
 import {Component, Input, ElementRef} from 'angular2/core';
 import {Card} from './card';
 import {Column} from '../column/column';
-import {BoardService} from '../board/board.service';
+import {CardService} from './card.service';
 
 @Component({
     selector: 'gtm-card',
@@ -14,7 +14,7 @@ export class CardComponent {
     editingCard = false;
     currentTitle: string;
 
-    constructor(private el: ElementRef, private _boardService: BoardService){}
+    constructor(private el: ElementRef, private _cardService: CardService){}
 
     blurOnEnter(event) {
         if (event.keyCode === 13) {
@@ -41,7 +41,7 @@ export class CardComponent {
           this.card.title = this.currentTitle;
         }
 
-        this._boardService.updateCard(this.card);
+        this._cardService.put(this.card);
         this.editingCard = false;
     }
 
