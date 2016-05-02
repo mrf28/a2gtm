@@ -9,11 +9,8 @@ var apiUrl = baseUrl + '/column';
 
 @Injectable()
 export class ColumnService {
-  //cache
-  cards: Card[]
 
   constructor(private _http: HttpClient) {
-    this.cards = [];
   }
 
   getAll() {
@@ -32,10 +29,9 @@ export class ColumnService {
   }
 
   put(column: Column) {
-    this._http
+    return this._http
       .put(apiUrl + '/' + column._id, JSON.stringify(column))
-      .toPromise()
-      .then(res => console.log(res.json()));
+      .toPromise();
   }
 
   post(column: Column) {;
@@ -44,9 +40,8 @@ export class ColumnService {
   }
 
   delete(column: Column) {
-    this._http.delete(apiUrl + '/' + column._id)
-      .toPromise()
-      .then(res => console.log(res.json()));
+    return this._http.delete(apiUrl + '/' + column._id)
+      .toPromise();
 
   }
 

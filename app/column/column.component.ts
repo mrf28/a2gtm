@@ -1,9 +1,12 @@
-import {Component, Input, OnInit, AfterViewInit, ElementRef} from 'angular2/core';
+import {Component, Input, Output, OnInit, AfterViewInit, EventEmitter, ElementRef} from 'angular2/core';
 import {Column} from './column';
 import {Card} from '../card/card';
 import {CardComponent} from '../card/card.component'
 import {ColumnService} from './column.service';
+import {WebSocketService} from '../ws.service';
 import {CardService} from '../card/card.service';
+import {OrderBy} from '../pipes/orderby.pipe';
+import {Where} from '../pipes/where.pipe';
 
 declare var jQuery: any;
 
@@ -11,30 +14,43 @@ declare var jQuery: any;
   selector: 'gtm-column',
   templateUrl: 'app/column/column.component.html',
   styleUrls: ['app/column/column.component.css'],
-  directives: [CardComponent]
+  directives: [CardComponent],
+  pipes: [OrderBy, Where]
 })
 export class ColumnComponent implements OnInit {
   @Input()
   column: Column;
+  @Input()
+  cards: Card[];
+  @Output()
+  public onAddCard: EventEmitter<Card>;
+  @Output() cardUpdate: EventEmitter<Card>;
+
   editingColumn = false;
   addingCard = false;
   addCardText: string;
   currentTitle: string;
 
   constructor(private el: ElementRef,
+    private _ws: WebSocketService,
     private _columnService: ColumnService,
     private _cardService: CardService) {
+    this.onAddCard = new EventEmitter();
+    this.cardUpdate = new EventEmitter();
   }
 
   ngOnInit() {
-    this._columnService.getCards(this.column._id)
-      .subscribe(cards  => {
-        this.column.cards = cards;
-        this.setupView();
-        for (var i in cards) {
-          this._columnService.cards.push(cards[i]); 
-        }
-      });
+    this.setupView();
+    this._ws.onColumnUpdate.subscribe(column => {
+      if (this.column._id === column._id) {
+        this.column = column;
+      }
+    });
+    // this._ws.onCardUpdate.subscribe(card => {
+    //   // console.log('a');
+    //   this.cards.filter(c => c._id === card._id)[0] = card;
+    // });
+
   }
 
   setupView() {
@@ -66,7 +82,7 @@ export class ColumnComponent implements OnInit {
   updateCardsOrder(event) {
     let cardArr = jQuery('[column-id=' + event.columnId + '] .card'),
       i: number = 0,
-      elBefore:number = -1,
+      elBefore: number = -1,
       elAfter: number = -1,
       newOrder: number = 0;
 
@@ -76,7 +92,7 @@ export class ColumnComponent implements OnInit {
       }
     }
 
-    if (cardArr.length > 1){
+    if (cardArr.length > 1) {
       if (i > 0 && i < cardArr.length - 1) {
         elBefore = +cardArr[i - 1].getAttribute('card-order');
         elAfter = +cardArr[i + 1].getAttribute('card-order');
@@ -95,10 +111,14 @@ export class ColumnComponent implements OnInit {
       newOrder = 1000;
     }
 
-    let card = this._columnService.cards.filter(x => x._id === event.cardId)[0];
+
+    let card = this.cards.filter(x => x._id === event.cardId)[0];
+    let oldColumnId = card.columnId;
     card.order = newOrder;
     card.columnId = event.columnId;
-    this._cardService.put(card);
+    this._cardService.put(card).then(res => {
+      this._ws.updateCard(this.column.boardId, card);
+    });
   }
 
   blurOnEnter(event) {
@@ -115,15 +135,20 @@ export class ColumnComponent implements OnInit {
     }
   }
 
-  addCard(){
-    this.column.cards = this.column.cards || [];
+  addCard() {
+    this.cards = this.cards || [];
     let newCard = <Card>{
       title: this.addCardText,
-      order: (this.column.cards.length + 1) * 1000,
-      columnId: this.column._id
+      order: (this.cards.length + 1) * 1000,
+      columnId: this.column._id,
+      boardId: this.column.boardId
     };
     this._cardService.post(newCard)
-    .subscribe(card => this.column.cards.push(card) );
+      .subscribe(card => {
+        //this.cards.push(card);
+        this.onAddCard.emit(card);
+        this._ws.addCard(card.boardId, card);
+      });
   }
 
   addCardOnEnter(event: KeyboardEvent) {
@@ -141,7 +166,9 @@ export class ColumnComponent implements OnInit {
 
   updateColumn() {
     if (this.column.title && this.column.title.trim() !== '') {
-      this._columnService.put(this.column);
+      this._columnService.put(this.column).then(res => {
+        this._ws.updateColumn(this.column.boardId, this.column);
+      });
       this.editingColumn = false;
     } else {
       this.cleadAddColumn();
@@ -172,8 +199,17 @@ export class ColumnComponent implements OnInit {
     setTimeout(function() { input.focus(); }, 0);
   }
 
+
+  updateColumnOnBlur() {
+    if (this.editingColumn) {
+      this.updateColumn();
+      this.clearAddCard();
+    }
+  }
+
+
   addCardOnBlur() {
-    if (this.addingCard){
+    if (this.addingCard) {
       if (this.addCardText && this.addCardText.trim() !== '') {
         this.addCard();
       }
@@ -186,14 +222,7 @@ export class ColumnComponent implements OnInit {
     this.addCardText = '';
   }
 
-  private findCardIndex(cardId, columnEl) {
-    let i = 0;
-    for (i = 0; i < columnEl.find('.card').length - 1; i++) {
-      if (columnEl.find('.card')[i].getAttribute('card-id') == cardId) {
-        return i;
-      }
-    }
-
-    return i;
+  onCardUpdate(card: Card){
+    this.cardUpdate.emit(card);
   }
 }

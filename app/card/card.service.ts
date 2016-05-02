@@ -8,7 +8,7 @@ const apiUrl = baseUrl + '/card';
 
 @Injectable()
 export class CardService {
-  
+
   constructor(private _http: HttpClient) {
 
   }
@@ -24,9 +24,8 @@ export class CardService {
   }
 
   put(card: Card) {
-    this._http.put(apiUrl + '/' + card._id, JSON.stringify(card))
-      .toPromise()
-      .then(res => console.log(res.json()));
+    return this._http.put(apiUrl + '/' + card._id, JSON.stringify(card))
+      .toPromise();
   }
 
   post(card: Card) {
@@ -35,9 +34,8 @@ export class CardService {
   }
 
   delete(card: Card) {
-    this._http.delete(apiUrl + '/' + card._id)
-      .toPromise()
-      .then(res => console.log(res.json()));
+    return this._http.delete(apiUrl + '/' + card._id)
+      .toPromise();
   }
 
 }

@@ -3,7 +3,7 @@ import {Http, Response} from 'angular2/http';
 import {HttpClient} from '../httpclient';
 import {Board} from '../board/board';
 import {Column} from '../column/column';
-
+import {Card} from '../card/card';
 
 const baseUrl = 'http://localhost:3001';
 const apiUrl = baseUrl + '/board';
@@ -28,6 +28,11 @@ export class BoardService {
   getColumns(id: string) {
     return this._http.get(apiUrl + '/' + id + '/columns')
       .map((res: Response) => <Column[]>res.json().data);
+  }
+
+  getCards(id: string) {
+    return this._http.get(apiUrl + '/' + id + '/cards')
+      .map((res: Response) => <Card[]>res.json().data);
   }
 
   put(board: Board) {

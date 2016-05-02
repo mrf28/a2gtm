@@ -44,4 +44,37 @@ var server = http.createServer(function(request, response) {
   serverWorking(response, absPath);
 });
 
-var port_number = server.listen(process.env.PORT || 3000);
+// var io = require('socket.io').listen(server);
+/*server.listen(4000, function(){
+  console.log('Websockets listening on port 4000');
+});*/
+
+// io.set("origins", "*:*");
+
+// io.on('connection', function(socket){
+//   console.log('connected');
+
+//   socket.on('joinBoard', function(boardId){
+//     console.log('joined board: ' + boardId);
+//     socket.join(boardId);
+//   });
+
+//   socket.on('addColumn', function (data){
+//     console.log('column received', data);
+//     socket.broadcast.to(data.boardId)
+//       .emit("broadcast column",data.column);
+//   })
+
+//   socket.on('addCard', function (data){
+//     socket.broadcast.to(data.boardId)
+//       .emit("broadcast card",data.card);
+//   })
+
+//   socket.on('disconnect', function(){
+//     console.log('disconnecting');
+//   });
+// });
+
+var port_number = server.listen(process.env.PORT || 3000, function(){
+  console.log('listening on port 3000');
+});
