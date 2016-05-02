@@ -5,12 +5,6 @@ jspm_packages
 link-checker-results.txt
 npm-debug.log
 **/*npm-debug.log.*
-*.js
 *.js.map
 _test-output
 _temp
-
-!**/*e2e-spec.js
-!karma*.js
-!protractor*.js
-!wallaby.js
