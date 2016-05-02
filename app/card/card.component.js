@@ -28,21 +28,29 @@ System.register(['angular2/core', './card', './card.service', '../ws.service'], 
             }],
         execute: function() {
             CardComponent = (function () {
-                function CardComponent(el, _ws, _cardService) {
+                function CardComponent(el, _ref, _ws, _cardService) {
                     this.el = el;
+                    this._ref = _ref;
                     this._ws = _ws;
                     this._cardService = _cardService;
                     this.editingCard = false;
+                    this.zone = new core_1.NgZone({ enableLongStackTrace: false });
                     this.cardUpdate = new core_1.EventEmitter();
                 }
                 CardComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._ws.onCardUpdate.subscribe(function (card) {
+                        // this.zone.run(() => {
+                        console.log('card update on card component', _this.card, card);
                         if (_this.card._id === card._id) {
-                            _this.card = card;
+                            _this.card.columnId = card.columnId;
+                            _this.card.order = card.order;
+                            _this.card.title = card.title;
+                            // this._ref.markForCheck();
                             _this.cardUpdate.emit(card);
                         }
                     });
+                    // });
                 };
                 CardComponent.prototype.blurOnEnter = function (event) {
                     if (event.keyCode === 13) {
@@ -71,6 +79,10 @@ System.register(['angular2/core', './card', './card.service', '../ws.service'], 
                     });
                     this.editingCard = false;
                 };
+                //TODO: check lifecycle
+                CardComponent.prototype.ngOnDestroy = function () {
+                    //this._ws.onCardUpdate.unsubscribe();
+                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', card_1.Card)
@@ -85,7 +97,7 @@ System.register(['angular2/core', './card', './card.service', '../ws.service'], 
                         templateUrl: 'app/card/card.component.html',
                         styleUrls: ['app/card/card.component.css'],
                     }), 
-                    __metadata('design:paramtypes', [core_1.ElementRef, ws_service_1.WebSocketService, card_service_1.CardService])
+                    __metadata('design:paramtypes', [core_1.ElementRef, core_1.ChangeDetectorRef, ws_service_1.WebSocketService, card_service_1.CardService])
                 ], CardComponent);
                 return CardComponent;
             }());

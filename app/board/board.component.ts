@@ -50,16 +50,18 @@ export class BoardComponent implements OnInit {
     //   this.board.columns.filter(c => c._id === column._id)[0] = column;
     // });
 
-    this._ws.onCardUpdate.subscribe(card => {
-      this.board.cards.filter(c => c._id === card._id)[0] = card;
-      this.foreceUpdateCards();
-    });
+    // this._ws.onCardUpdate.subscribe(card => {
+    //   console.log('card update on board component');
+    //   this.board.cards.filter(c => c._id === card._id)[0] = card;
+    //   this.foreceUpdateCards();
+    // });
 
     this._ws.onCardAdd.subscribe(card => {
         this.board.cards.push(card);
     });
-
-    this._boardService.get('5724b493303c3b6c214e7c2b').subscribe(board => {
+  
+  // this._boardService.get('5724b493303c3b6c214e7c2b').subscribe(board => {
+    this._boardService.get('5727939ee9c15e980bac3d18').subscribe(board => {
       this.board = board;
       document.title = this.board.title + " | Generic Task Manager";
       this._ws.join(this.board._id);

@@ -10,6 +10,7 @@
 
 <section *ngIf="board" id="main" >
   <div *ngFor="#column of board.columns | orderBy : 'order'" class="sortable-column">
+  <!-- <div *ngFor="#column of board.columns" class="sortable-column"> -->
     <gtm-column [column]="column"
         (onAddCard)="addCard($event)"
         (cardUpdate)="onCardUpdate($event)"

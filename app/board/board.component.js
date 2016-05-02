@@ -58,14 +58,16 @@ System.register(['angular2/core', './board.service', '../column/column.service',
                     //   console.log(column, this.board.columns.filter(c => c._id === column._id)[0]);
                     //   this.board.columns.filter(c => c._id === column._id)[0] = column;
                     // });
-                    this._ws.onCardUpdate.subscribe(function (card) {
-                        _this.board.cards.filter(function (c) { return c._id === card._id; })[0] = card;
-                        _this.foreceUpdateCards();
-                    });
+                    // this._ws.onCardUpdate.subscribe(card => {
+                    //   console.log('card update on board component');
+                    //   this.board.cards.filter(c => c._id === card._id)[0] = card;
+                    //   this.foreceUpdateCards();
+                    // });
                     this._ws.onCardAdd.subscribe(function (card) {
                         _this.board.cards.push(card);
                     });
-                    this._boardService.get('5724b493303c3b6c214e7c2b').subscribe(function (board) {
+                    // this._boardService.get('5724b493303c3b6c214e7c2b').subscribe(board => {
+                    this._boardService.get('5727939ee9c15e980bac3d18').subscribe(function (board) {
                         _this.board = board;
                         document.title = _this.board.title + " | Generic Task Manager";
                         _this._ws.join(_this.board._id);
