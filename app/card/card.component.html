@@ -1,5 +1,7 @@
-<li class="card" [attr.card-id]="card.id"
-  (click)="editCard()">
+<li class="card" 
+    [attr.card-id]="card._id"
+    [attr.card-order]="card.order"
+    (click)="editCard()">
     <span [innerHtml]="card.title" [style.display]="editingCard ? 'none' : ''">
     </span>
     <textarea

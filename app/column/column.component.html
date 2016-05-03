@@ -1,16 +1,18 @@
-<div class="column" [attr.column-id]="column.id">
+<div class="column" 
+    [attr.column-id]="column._id"
+    [attr.column-order]="column.order">
     <div class="column-header">
         <h4 [innerHtml]="column.title"
             [style.display]="editingColumn ?'none' : '' "
             (click)="editColumn()" ></h4>
         <input  
             [style.display]="editingColumn ?'' : 'none' "
-            (blur)="updateColumn()"
+            (blur)="updateColumnOnBlur()"
             (keyup)="addColumnOnEnter($event)"
             [(ngModel)]="column.title" />
     </div>
-    <ul class="card-list" [attr.column-id]="column.id">
-        <li *ngFor="#card of column.cards">
+    <ul class="card-list" [attr.column-id]="column._id">
+        <li *ngFor="#card of cards | where : { columnId: column._id } | orderBy : 'order'">
             <gtm-card [card]="card"></gtm-card>
         </li>
     </ul>
@@ -24,7 +26,7 @@
             [style.display]="addingCard ? '' : 'none' "
             [attr.autofocus]="addingCard"
             (keyup)="addCardOnEnter($event)"
-            (blur)="addCard(column)"
+            (blur)="addCardOnBlur()"
             [(ngModel)]="addCardText" />
         </div>
 </div>

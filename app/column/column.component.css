@@ -17,6 +17,9 @@
   line-height: 18px;
   font-size: 14px;
   margin-bottom: 3px;
+  height: 18px;
+  width: 260px;
+  display: inline-block;
   cursor: pointer;
   cursor: hand;
 }

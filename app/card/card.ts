@@ -1,6 +1,7 @@
 export class Card {
-	id: number;
-    title: string;
-    columnId: number;
-    order: number;
+	_id: string;
+  title: string;
+  columnId: string;
+  boardId: string;
+  order: number;
 }
