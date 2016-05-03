@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, ElementRef, NgZone} from 'angular2/core';
+import {Component, OnInit, Input, Output, EventEmitter, ElementRef, ChangeDetectorRef, NgZone} from 'angular2/core';
 import {Card} from './card';
 import {Column} from '../column/column';
 import {CardService} from './card.service';
@@ -15,10 +15,12 @@ export class CardComponent implements OnInit {
   @Output() cardUpdate: EventEmitter<Card>;
   editingCard = false;
   currentTitle: string;
-
+  zone: NgZone;
   constructor(private el: ElementRef,
+    private _ref: ChangeDetectorRef,
     private _ws: WebSocketService,
-    private _cardService: CardService) { 
+    private _cardService: CardService) {
+    this.zone = new NgZone({ enableLongStackTrace: false });
     this.cardUpdate = new EventEmitter();
   }
 
@@ -61,6 +63,11 @@ export class CardComponent implements OnInit {
       this._ws.updateCard(this.card.boardId, this.card);
     });
     this.editingCard = false;
+  }
+
+  //TODO: check lifecycle
+  private ngOnDestroy() {
+    //this._ws.onCardUpdate.unsubscribe();
   }
 
 }
