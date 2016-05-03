@@ -42,7 +42,6 @@
     "socket.io-client": "^1.4.5",
     "systemjs": "0.19.26",
     "typescript": "^1.8.10",
-    "tsc": "^1.8.10",
     "typings": "^0.7.12",
     "zone.js": "0.6.10"
   },
