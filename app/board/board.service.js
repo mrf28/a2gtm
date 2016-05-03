@@ -11,7 +11,7 @@ System.register(['angular2/core', '../httpclient'], function(exports_1, context_
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, httpclient_1;
-    var baseUrl, apiUrl, BoardService;
+    var BoardService;
     return {
         setters:[
             function (core_1_1) {
@@ -21,42 +21,41 @@ System.register(['angular2/core', '../httpclient'], function(exports_1, context_
                 httpclient_1 = httpclient_1_1;
             }],
         execute: function() {
-            baseUrl = 'http://localhost:3001';
-            apiUrl = baseUrl + '/board';
             BoardService = (function () {
                 function BoardService(_http) {
                     this._http = _http;
+                    this.apiUrl = '/board';
                 }
                 BoardService.prototype.getAll = function () {
-                    return this._http.get(apiUrl)
+                    return this._http.get(this.apiUrl)
                         .map(function (res) { return res.json().data; });
                 };
                 BoardService.prototype.get = function (id) {
-                    return this._http.get(apiUrl + '/' + id)
+                    return this._http.get(this.apiUrl + '/' + id)
                         .map(function (res) { return res.json().data; });
                 };
                 BoardService.prototype.getColumns = function (id) {
-                    return this._http.get(apiUrl + '/' + id + '/columns')
+                    return this._http.get(this.apiUrl + '/' + id + '/columns')
                         .map(function (res) { return res.json().data; });
                 };
                 BoardService.prototype.getCards = function (id) {
-                    return this._http.get(apiUrl + '/' + id + '/cards')
+                    return this._http.get(this.apiUrl + '/' + id + '/cards')
                         .map(function (res) { return res.json().data; });
                 };
                 BoardService.prototype.put = function (board) {
                     var body = JSON.stringify(board);
                     console.log(body);
-                    this._http.put(apiUrl + '/' + board._id, body)
+                    this._http.put(this.apiUrl + '/' + board._id, body)
                         .toPromise()
                         .then(function (res) { return console.log(res.json()); });
                 };
                 BoardService.prototype.post = function (board) {
                     var body = JSON.stringify(board);
-                    return this._http.post(apiUrl, body)
+                    return this._http.post(this.apiUrl, body)
                         .map(function (res) { return res.json().data; });
                 };
                 BoardService.prototype.delete = function (board) {
-                    this._http.delete(apiUrl + '/' + board._id)
+                    this._http.delete(this.apiUrl + '/' + board._id)
                         .toPromise()
                         .then(function (res) { return console.log(res.json()); });
                 };

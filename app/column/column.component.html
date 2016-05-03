@@ -13,7 +13,7 @@
     </div>
     <ul class="card-list" [attr.column-id]="column._id">
         <li *ngFor="#card of cards | where : { columnId: column._id } | orderBy : 'order'">
-            <gtm-card [card]="card" (cardUpdate)="onCardUpdate($event)"></gtm-card>
+            <gtm-card [card]="card"></gtm-card>
         </li>
     </ul>
         <div class="add-card" 

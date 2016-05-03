@@ -11,7 +11,7 @@ System.register(['angular2/core', '../httpclient'], function(exports_1, context_
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, httpclient_1;
-    var baseUrl, apiUrl, ColumnService;
+    var ColumnService;
     return {
         setters:[
             function (core_1_1) {
@@ -21,36 +21,35 @@ System.register(['angular2/core', '../httpclient'], function(exports_1, context_
                 httpclient_1 = httpclient_1_1;
             }],
         execute: function() {
-            baseUrl = 'http://localhost:3001';
-            apiUrl = baseUrl + '/column';
             ColumnService = (function () {
                 function ColumnService(_http) {
                     this._http = _http;
+                    this.apiUrl = '/column';
                 }
                 ColumnService.prototype.getAll = function () {
-                    return this._http.get(apiUrl)
+                    return this._http.get(this.apiUrl)
                         .map(function (res) { return res.json().data; });
                 };
                 ColumnService.prototype.get = function (id) {
-                    return this._http.get(apiUrl + '/' + id)
+                    return this._http.get(this.apiUrl + '/' + id)
                         .map(function (res) { return res.json().data; });
                 };
                 ColumnService.prototype.getCards = function (id) {
-                    return this._http.get(apiUrl + '/' + id + '/cards')
+                    return this._http.get(this.apiUrl + '/' + id + '/cards')
                         .map(function (res) { return res.json().data; });
                 };
                 ColumnService.prototype.put = function (column) {
                     return this._http
-                        .put(apiUrl + '/' + column._id, JSON.stringify(column))
+                        .put(this.apiUrl + '/' + column._id, JSON.stringify(column))
                         .toPromise();
                 };
                 ColumnService.prototype.post = function (column) {
                     ;
-                    return this._http.post(apiUrl, JSON.stringify(column))
+                    return this._http.post(this.apiUrl, JSON.stringify(column))
                         .map(function (res) { return res.json().data; });
                 };
                 ColumnService.prototype.delete = function (column) {
-                    return this._http.delete(apiUrl + '/' + column._id)
+                    return this._http.delete(this.apiUrl + '/' + column._id)
                         .toPromise();
                 };
                 ColumnService = __decorate([

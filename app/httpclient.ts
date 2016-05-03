@@ -1,14 +1,11 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response, Headers, RequestOptionsArgs } from 'angular2/http';
 
-
-const baseUrl = 'http://localhost:3001';
-
 @Injectable()
 export class HttpClient {
   headers: Headers;
   options: RequestOptionsArgs;
-
+  
   constructor(private _http: Http) {
     this.headers = new Headers();
 

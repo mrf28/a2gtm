@@ -41,9 +41,10 @@ export class ColumnComponent implements OnInit {
 
   ngOnInit() {
     this.setupView();
-    this._ws.onColumnUpdate.subscribe(column => {
+    this._ws.onColumnUpdate.subscribe((column: Column) => {
       if (this.column._id === column._id) {
-        this.column = column;
+        this.column.title = column.title;
+        this.column.order = column.order;
       }
     });
     // this._ws.onCardUpdate.subscribe(card => {

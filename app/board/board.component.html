@@ -12,7 +12,6 @@
   <div *ngFor="#column of board.columns | orderBy : 'order'" class="sortable-column">
     <gtm-column [column]="column"
         (onAddCard)="addCard($event)"
-        (cardUpdate)="onCardUpdate($event)"
         [cards]="board.cards">
     </gtm-column>
   </div>

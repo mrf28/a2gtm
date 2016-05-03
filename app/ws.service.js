@@ -27,7 +27,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 }
                 WebSocketService.prototype.connect = function () {
                     var _this = this;
-                    this.socket = io.connect('http://localhost:4000');
+                    this.socket = io();
                     this.socket.on('addColumn', function (data) {
                         _this.onColumnAdd.emit(data.column);
                     });

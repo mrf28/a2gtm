@@ -2,10 +2,10 @@ var _ = require('lodash');
 var Card = require('../models/card.js');
 
 module.exports = function(app) {
-    console.log('starting card routes');
+    //console.log('starting card routes');
     /* Create */
     app.post('/card', function (req, res) {
-        console.log('POST /card');
+        //console.log('POST /card');
         var newCard = new Card(req.body);
         newCard.save(function(err, newCard) {
             if (err) {
@@ -17,7 +17,7 @@ module.exports = function(app) {
 
     /* Read */
     app.get('/card', function (req, res) {
-        console.log('GET /card');
+        //console.log('GET /card');
         Card.find(function(err, cards) {
             if (err) {
                 res.json({info: 'error during find cards', error: err});
@@ -27,7 +27,7 @@ module.exports = function(app) {
     });
 
     app.get('/card/:id', function (req, res) {
-        console.log('GET /card/:id');
+        //console.log('GET /card/:id');
         Card.findById(req.params.id, function(err, card) {
             if (err) {
                 res.json({info: 'error during find card', error: err});
@@ -42,7 +42,7 @@ module.exports = function(app) {
 
     /* Update */
     app.put('/card/:id', function (req, res) {
-        console.log('PUT /card/:id');
+        //console.log('PUT /card/:id');
         Card.findById(req.params.id, function(err, card) {
             if (err) {
                 res.json({info: 'error during find card', error: err});
@@ -64,7 +64,7 @@ module.exports = function(app) {
 
     /* Delete */
     app.delete('/card/:id', function (req, res) {
-        console.log('DELETE /card/:id');
+        //console.log('DELETE /card/:id');
         Card.findByIdAndRemove(req.params.id, function(err) {
             if (err) {
                 res.json({info: 'error during remove card', error: err});

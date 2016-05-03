@@ -39,8 +39,9 @@ System.register(['angular2/core', './card', './card.service', '../ws.service'], 
                     var _this = this;
                     this._ws.onCardUpdate.subscribe(function (card) {
                         if (_this.card._id === card._id) {
-                            _this.card = card;
-                            _this.cardUpdate.emit(card);
+                            _this.card.title = card.title;
+                            _this.card.order = card.order;
+                            _this.card.columnId = card.columnId;
                         }
                     });
                 };

@@ -11,7 +11,7 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, http_1;
-    var baseUrl, HttpClient;
+    var HttpClient;
     return {
         setters:[
             function (core_1_1) {
@@ -21,7 +21,6 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                 http_1 = http_1_1;
             }],
         execute: function() {
-            baseUrl = 'http://localhost:3001';
             HttpClient = (function () {
                 function HttpClient(_http) {
                     this._http = _http;

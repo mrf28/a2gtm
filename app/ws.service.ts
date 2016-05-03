@@ -21,7 +21,7 @@ export class WebSocketService {
   }
 
   connect(){
-    this.socket = io.connect('http://localhost:4000');
+    this.socket = io();
 
     this.socket.on('addColumn', data => {
       this.onColumnAdd.emit(<Column>data.column);

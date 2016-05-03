@@ -3,10 +3,10 @@ var Column = require('../models/column.js');
 var Card = require('../models/card.js');
 
 module.exports = function(app) {
-    console.log('starting column routes');
+    //console.log('starting column routes');
     /* Create */
     app.post('/column', function (req, res) {
-        console.log('POST /column');
+        //console.log('POST /column');
         var newColumn = new Column(req.body);
         newColumn.save(function(err, newColumn) {
             if (err) {
@@ -18,7 +18,7 @@ module.exports = function(app) {
 
     /* Read */
     app.get('/column', function (req, res) {
-        console.log('GET /column');
+        //console.log('GET /column');
         Column.find(function(err, columns) {
             if (err) {
                 res.json({info: 'error during find columns', error: err});
@@ -28,7 +28,7 @@ module.exports = function(app) {
     });
 
     app.get('/column/:id', function (req, res) {
-        console.log('GET /column/:id');
+        //console.log('GET /column/:id');
         Column.findById(req.params.id, function(err, column) {
             if (err) {
                 res.json({info: 'error during find column', error: err});
@@ -43,7 +43,7 @@ module.exports = function(app) {
 
 
     app.get('/column/:id/cards', function (req, res) {
-        console.log('GET /column/:id');
+        //console.log('GET /column/:id');
         Column.findById(req.params.id, function(err, column) {
             if (err) {
                 res.json({info: 'error during find column', error: err});
@@ -60,7 +60,7 @@ module.exports = function(app) {
 
     /* Update */
     app.put('/column/:id', function (req, res) {
-        console.log('PUT /column/:id');
+        //console.log('PUT /column/:id');
         Column.findById(req.params.id, function(err, column) {
             if (err) {
                 res.json({info: 'error during find column', error: err});
@@ -82,7 +82,7 @@ module.exports = function(app) {
 
     /* Delete */
     app.delete('/column/:id', function (req, res) {
-        console.log('DELETE /column/:id');
+        //console.log('DELETE /column/:id');
         Column.findByIdAndRemove(req.params.id, function(err) {
             if (err) {
                 res.json({info: 'error during remove column', error: err});

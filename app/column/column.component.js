@@ -55,7 +55,8 @@ System.register(['angular2/core', './column', '../card/card.component', './colum
                     this.setupView();
                     this._ws.onColumnUpdate.subscribe(function (column) {
                         if (_this.column._id === column._id) {
-                            _this.column = column;
+                            _this.column.title = column.title;
+                            _this.column.order = column.order;
                         }
                     });
                     // this._ws.onCardUpdate.subscribe(card => {

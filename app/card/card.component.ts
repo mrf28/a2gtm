@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, ElementRef} from 'angular2/core';
+import {Component, OnInit, Input, Output, EventEmitter, ElementRef, NgZone} from 'angular2/core';
 import {Card} from './card';
 import {Column} from '../column/column';
 import {CardService} from './card.service';
@@ -23,10 +23,11 @@ export class CardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._ws.onCardUpdate.subscribe(card => {
+    this._ws.onCardUpdate.subscribe((card: Card) => {
       if (this.card._id === card._id) {
-        this.card = card;
-        this.cardUpdate.emit(card);
+        this.card.title = card.title;
+        this.card.order = card.order;
+        this.card.columnId = card.columnId;
       }
     });
   }
