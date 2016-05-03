@@ -34,9 +34,9 @@ app.use('/', router);
 
 var mongoUri = process.env.MONGO_URI || 'mongodb://localhost/gtm';
 
+console.log(mongoUri);
 var mongoose = require('mongoose');
 mongoose.connect(mongoUri);
-
 var cardRoutes = require('./api/routes/card.routes.js')(app);
 var columnRoutes = require('./api/routes/column.routes.js')(app);
 var boardRoutes = require('./api/routes/board.routes.js')(app);

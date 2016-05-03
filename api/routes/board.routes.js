@@ -29,9 +29,10 @@ module.exports = function(app) {
     });
 
     app.get('/board/:id', function (req, res) {
-        //console.log('GET /board/:id');
+        console.log('GET /board/:id', req.params.id);
         Board.findById(req.params.id, function(err, board) {
             if (err) {
+                console.error(err);
                 res.json({info: 'error during find board', error: err});
             };
             if (board) {
