@@ -14,6 +14,7 @@
   line-height: 18px;
   cursor: pointer;
   white-space: normal;
+  word-wrap: break-word;
   list-style: none;
   border-bottom: solid 1px #ccc;
   transition: all;
