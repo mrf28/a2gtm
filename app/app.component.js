@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', './board/board.service', './card/card.service', './column/column.service', './board/board.component', './httpclient', './ws.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', './board/board.service', './card/card.service', './column/column.service', './board/board.component', './httpclient', './ws.service', './dashboard/dashboard.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', './board/board.service', './c
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, board_service_1, card_service_1, column_service_1, board_component_1, httpclient_1, ws_service_1;
+    var core_1, http_1, router_1, board_service_1, card_service_1, column_service_1, board_component_1, httpclient_1, ws_service_1, dashboard_component_1;
     var AppComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', 'angular2/http', './board/board.service', './c
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             },
             function (board_service_1_1) {
                 board_service_1 = board_service_1_1;
@@ -37,6 +40,9 @@ System.register(['angular2/core', 'angular2/http', './board/board.service', './c
             },
             function (ws_service_1_1) {
                 ws_service_1 = ws_service_1_1;
+            },
+            function (dashboard_component_1_1) {
+                dashboard_component_1 = dashboard_component_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -47,9 +53,13 @@ System.register(['angular2/core', 'angular2/http', './board/board.service', './c
                         selector: 'gtm-app',
                         templateUrl: 'app/app.component.html',
                         styleUrls: ['app/app.component.css'],
-                        directives: [board_component_1.BoardComponent],
-                        providers: [http_1.HTTP_PROVIDERS, httpclient_1.HttpClient, ws_service_1.WebSocketService, board_service_1.BoardService, column_service_1.ColumnService, card_service_1.CardService]
-                    }), 
+                        directives: [router_1.ROUTER_DIRECTIVES, board_component_1.BoardComponent],
+                        providers: [http_1.HTTP_PROVIDERS, router_1.ROUTER_PROVIDERS, httpclient_1.HttpClient, ws_service_1.WebSocketService, board_service_1.BoardService, column_service_1.ColumnService, card_service_1.CardService]
+                    }),
+                    router_1.RouteConfig([
+                        { path: '/', name: 'Dashboard', component: dashboard_component_1.DashboardComponent, useAsDefault: true },
+                        { path: '/b/:id', name: 'Board', component: board_component_1.BoardComponent },
+                    ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;

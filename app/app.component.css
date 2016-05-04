@@ -19,9 +19,9 @@ nav a.logo{
   line-height: 30px;
   font-weight: bold;
   color:#7FB2D1;
-  width: 100%;
+  width: calc(100% - 200px);
   text-align: center;
-  margin-top: -30px;
+  /*margin-top: -30px;*/
 }
 
 

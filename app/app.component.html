@@ -1,9 +1,9 @@
 <header>
 <nav>
-    <a href="#" class="btn">|||| Boards</a>
+    <a class="btn" [routerLink]="['Dashboard']">|||| Boards</a>
     <a class="logo">Generic Task Manager</a>
 </nav>
 </header>
 <div id="content-wrapper">
-<gtm-board></gtm-board>
+  <router-outlet></router-outlet>
 </div>

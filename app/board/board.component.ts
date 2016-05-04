@@ -9,7 +9,7 @@ import {WebSocketService} from '../ws.service';
 import {ColumnComponent} from '../column/column.component';
 import {OrderBy} from '../pipes/orderby.pipe';
 import {Where} from '../pipes/where.pipe';
-
+import {RouteParams} from 'angular2/router';
 
 declare var jQuery: any;
 var curYPos = 0,
@@ -35,7 +35,8 @@ export class BoardComponent implements OnInit {
   constructor(public el: ElementRef,
     private _ws: WebSocketService,
     private _boardService: BoardService,
-    private _columnService: ColumnService) {
+    private _columnService: ColumnService,
+    private _routeParams: RouteParams) {
   }
 
   ngOnInit() {
@@ -48,10 +49,8 @@ export class BoardComponent implements OnInit {
     this._ws.onCardAdd.subscribe(card => {
         this.board.cards.push(card);
     });
-    
-    this._boardService.get('57280512c150f9999efcd38b').subscribe(board => {  
-    // this._boardService.get('5724b493303c3b6c214e7c2b').subscribe(board => {
-    // this._boardService.get('5727939ee9c15e980bac3d18').subscribe(board => {
+    let boardId = this._routeParams.get('id');
+    this._boardService.get(boardId).subscribe(board => {  
       this.board = board;
       document.title = this.board.title + " | Generic Task Manager";
       this._ws.join(this.board._id);

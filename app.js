@@ -30,6 +30,10 @@ router.get('/', function(req, res, next) {
     res.render('index.html');
 });
 
+router.get('/b/:id', function(req, res, next) {
+    res.sendFile(__dirname + '/index.html');
+});
+
 app.use('/', router);
 
 var mongoUri = process.env.MONGO_URI || 'mongodb://localhost/gtm';

@@ -50,7 +50,7 @@ module.exports = function(app) {
                 res.json({info: 'error during find board', error: err});
             };
             if (board) {
-                Column.find({}).sort({order: 1}).exec({ boardId: req.params.id }, function (err, columns) {
+                Column.find({boardId: req.params.id}).sort({order: 1}).exec({ boardId: req.params.id }, function (err, columns) {
                     res.json({info: 'Columns found successfully', data: columns});    
                 })
             } else {

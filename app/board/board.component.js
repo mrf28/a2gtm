@@ -1,4 +1,4 @@
-System.register(['angular2/core', './board.service', '../column/column.service', '../ws.service', '../column/column.component', '../pipes/orderby.pipe', '../pipes/where.pipe'], function(exports_1, context_1) {
+System.register(['angular2/core', './board.service', '../column/column.service', '../ws.service', '../column/column.component', '../pipes/orderby.pipe', '../pipes/where.pipe', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './board.service', '../column/column.service',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, board_service_1, column_service_1, ws_service_1, column_component_1, orderby_pipe_1, where_pipe_1;
+    var core_1, board_service_1, column_service_1, ws_service_1, column_component_1, orderby_pipe_1, where_pipe_1, router_1;
     var curYPos, curXPos, curDown, BoardComponent;
     return {
         setters:[
@@ -34,15 +34,19 @@ System.register(['angular2/core', './board.service', '../column/column.service',
             },
             function (where_pipe_1_1) {
                 where_pipe_1 = where_pipe_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             curYPos = 0, curXPos = 0, curDown = false;
             BoardComponent = (function () {
-                function BoardComponent(el, _ws, _boardService, _columnService) {
+                function BoardComponent(el, _ws, _boardService, _columnService, _routeParams) {
                     this.el = el;
                     this._ws = _ws;
                     this._boardService = _boardService;
                     this._columnService = _columnService;
+                    this._routeParams = _routeParams;
                     this.addingColumn = false;
                     this.editingTilte = false;
                     this.columnsAdded = 0;
@@ -57,9 +61,8 @@ System.register(['angular2/core', './board.service', '../column/column.service',
                     this._ws.onCardAdd.subscribe(function (card) {
                         _this.board.cards.push(card);
                     });
-                    this._boardService.get('57280512c150f9999efcd38b').subscribe(function (board) {
-                        // this._boardService.get('5724b493303c3b6c214e7c2b').subscribe(board => {
-                        // this._boardService.get('5727939ee9c15e980bac3d18').subscribe(board => {
+                    var boardId = this._routeParams.get('id');
+                    this._boardService.get(boardId).subscribe(function (board) {
                         _this.board = board;
                         document.title = _this.board.title + " | Generic Task Manager";
                         _this._ws.join(_this.board._id);
@@ -262,7 +265,7 @@ System.register(['angular2/core', './board.service', '../column/column.service',
                         directives: [column_component_1.ColumnComponent],
                         pipes: [orderby_pipe_1.OrderBy, where_pipe_1.Where]
                     }), 
-                    __metadata('design:paramtypes', [core_1.ElementRef, ws_service_1.WebSocketService, board_service_1.BoardService, column_service_1.ColumnService])
+                    __metadata('design:paramtypes', [core_1.ElementRef, ws_service_1.WebSocketService, board_service_1.BoardService, column_service_1.ColumnService, router_1.RouteParams])
                 ], BoardComponent);
                 return BoardComponent;
             }());

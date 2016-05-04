@@ -1,0 +1,22 @@
+<div class="boards-wrapper">
+<h2>Boards</h2>
+<div id="boards">
+  <a class="board" *ngFor="#board of boards" [routerLink]="['Board', {id: board._id}]">
+    <span class="title">{{board?.title}}</span>
+  </a>
+  <a href="#" class="board add-board" (click)="addBoard()">
+    <span class="title">Create a new board...</span>
+  </a>
+</div>
+</div>
+<!-- <div class="boards-wrapper">
+  <h2>Boards<h2>
+  <div id="boards">
+    <a href="#" class="board" *ngFor="#board of boards">
+      <span class="title">{{board?.title}}</span>
+    </a>
+    <div class="board add-board" (click)="addBoard()" >
+      <span class="title">Create new board...</span>
+    </div>
+  </div>
+</div> -->
