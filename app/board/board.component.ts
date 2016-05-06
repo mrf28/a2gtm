@@ -50,75 +50,70 @@ export class BoardComponent implements OnInit {
         this.board.cards.push(card);
     });
     let boardId = this._routeParams.get('id');
-    this._boardService.get(boardId).subscribe(board => {  
-      this.board = board;
-      document.title = this.board.title + " | Generic Task Manager";
-      this._ws.join(this.board._id);
-      this.loadColumns();
-    });
-  }
-
-  loadColumns() {
-    this._boardService.getColumns(this.board._id).subscribe(cols => {
-      this.board.columns = cols;
-      this.loadCards();
-    });
-  }
-
-  loadCards(){
-    this._boardService.getCards(this.board._id).subscribe(cards => {
-      this.board.cards = cards;
-      this.setupView();
-    });
+    this._ws.join(boardId);
+    this._boardService.getBoardWithColumnsAndCards(boardId)
+      .subscribe(data => { 
+        this.board = data[0];
+        this.board.columns = data[1];
+        this.board.cards = data[2];
+        document.title = this.board.title + " | Generic Task Manager";
+        this.setupView();
+      });
   }
 
   setupView() {
     let component = this;
-    var startColumn;
-    jQuery('#main').sortable({
-      items: '.sortable-column',
-      handler: '.header',
-      connectWith: "#main",
-      placeholder: "column-placeholder",
-      dropOnEmpty: true,
-      tolerance: 'pointer',
-      start: function(event, ui) {
-        ui.placeholder.height(ui.item.find('.column').outerHeight());
-        startColumn = ui.item.parent();
-      },
-      stop: function(event, ui) {
-        var columnId = ui.item.find('.column').attr('column-id');
+    setTimeout(function() {
+      var startColumn;
+      jQuery('#main').sortable({
+        items: '.sortable-column',
+        handler: '.header',
+        connectWith: "#main",
+        placeholder: "column-placeholder",
+        dropOnEmpty: true,
+        tolerance: 'pointer',
+        start: function(event, ui) {
+          ui.placeholder.height(ui.item.find('.column').outerHeight());
+          startColumn = ui.item.parent();
+        },
+        stop: function(event, ui) {
+          var columnId = ui.item.find('.column').attr('column-id');
 
-        component.updateColumnOrder({
-          columnId: columnId
-        });
-      }
-    });
+          component.updateColumnOrder({
+            columnId: columnId
+          });
+        }
+      }).disableSelection();
 
-    component.updateBoardWidth();
+      //component.bindPane();;
 
-    window.addEventListener('resize', function(e) {
+      window.addEventListener('resize', function(e) {
+        component.updateBoardWidth();
+      });
       component.updateBoardWidth();
-    });
-    //component.bindPane();;
+      document.getElementById('content-wrapper').style.backgroundColor = '';
+    }, 100);
   }
 
   bindPane() {
-    // let el = document.getElementById('content-wrapper');
-    // el.addEventListener('mousemove', function(e) {
-    //   e.preventDefault();
-    //   if (curDown === true) {
-    //     el.scrollLeft += (curXPos - e.pageX) * .25;// x > 0 ? x : 0;
-    //     el.scrollTop += (curYPos - e.pageY) * .25;// y > 0 ? y : 0;
-    //   }
-    // });
-
-    // el.addEventListener('mousedown', function(e) { 
-    //   curDown = true; curYPos = e.pageY; curXPos = e.pageX; 
-    // });
-    // el.addEventListener('mouseup', function(e) { 
-    //   curDown = false; 
-    // });
+    let el = document.getElementById('content-wrapper');
+    el.addEventListener('mousemove', function(e) {
+      e.preventDefault();
+      if (curDown === true) {
+        el.scrollLeft += (curXPos - e.pageX) * .25;// x > 0 ? x : 0;
+        el.scrollTop += (curYPos - e.pageY) * .25;// y > 0 ? y : 0;
+      }
+    });
+    
+    el.addEventListener('mousedown', function(e) { 
+      if (e.srcElement.id === 'main' || e.srcElement.id === 'content-wrapper'){
+        curDown = true; 
+      } 
+      curYPos = e.pageY; curXPos = e.pageX; 
+    });
+    el.addEventListener('mouseup', function(e) { 
+      curDown = false; 
+    });
   }
 
   updateBoardWidth() {

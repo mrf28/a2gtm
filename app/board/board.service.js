@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../httpclient'], function(exports_1, context_1) {
+System.register(['angular2/core', 'rxjs/Rx', '../httpclient'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['angular2/core', '../httpclient'], function(exports_1, context_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, httpclient_1;
+    var core_1, Rx_1, httpclient_1;
     var BoardService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (Rx_1_1) {
+                Rx_1 = Rx_1_1;
             },
             function (httpclient_1_1) {
                 httpclient_1 = httpclient_1_1;
@@ -25,14 +28,17 @@ System.register(['angular2/core', '../httpclient'], function(exports_1, context_
                 function BoardService(_http) {
                     this._http = _http;
                     this.apiUrl = '/board';
+                    this.boardsCache = [];
                 }
                 BoardService.prototype.getAll = function () {
-                    return this._http.get(this.apiUrl)
-                        .map(function (res) { return res.json().data; });
+                    return this._http.get(this.apiUrl).map(function (res) { return res.json().data; });
                 };
                 BoardService.prototype.get = function (id) {
                     return this._http.get(this.apiUrl + '/' + id)
                         .map(function (res) { return res.json().data; });
+                };
+                BoardService.prototype.getBoardWithColumnsAndCards = function (id) {
+                    return Rx_1.Observable.forkJoin(this.get(id), this.getColumns(id), this.getCards(id));
                 };
                 BoardService.prototype.getColumns = function (id) {
                     return this._http.get(this.apiUrl + '/' + id + '/columns')

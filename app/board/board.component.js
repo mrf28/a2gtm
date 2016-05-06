@@ -62,69 +62,65 @@ System.register(['angular2/core', './board.service', '../column/column.service',
                         _this.board.cards.push(card);
                     });
                     var boardId = this._routeParams.get('id');
-                    this._boardService.get(boardId).subscribe(function (board) {
-                        _this.board = board;
+                    this._ws.join(boardId);
+                    this._boardService.getBoardWithColumnsAndCards(boardId)
+                        .subscribe(function (data) {
+                        _this.board = data[0];
+                        _this.board.columns = data[1];
+                        _this.board.cards = data[2];
                         document.title = _this.board.title + " | Generic Task Manager";
-                        _this._ws.join(_this.board._id);
-                        _this.loadColumns();
-                    });
-                };
-                BoardComponent.prototype.loadColumns = function () {
-                    var _this = this;
-                    this._boardService.getColumns(this.board._id).subscribe(function (cols) {
-                        _this.board.columns = cols;
-                        _this.loadCards();
-                    });
-                };
-                BoardComponent.prototype.loadCards = function () {
-                    var _this = this;
-                    this._boardService.getCards(this.board._id).subscribe(function (cards) {
-                        _this.board.cards = cards;
                         _this.setupView();
                     });
                 };
                 BoardComponent.prototype.setupView = function () {
                     var component = this;
-                    var startColumn;
-                    jQuery('#main').sortable({
-                        items: '.sortable-column',
-                        handler: '.header',
-                        connectWith: "#main",
-                        placeholder: "column-placeholder",
-                        dropOnEmpty: true,
-                        tolerance: 'pointer',
-                        start: function (event, ui) {
-                            ui.placeholder.height(ui.item.find('.column').outerHeight());
-                            startColumn = ui.item.parent();
-                        },
-                        stop: function (event, ui) {
-                            var columnId = ui.item.find('.column').attr('column-id');
-                            component.updateColumnOrder({
-                                columnId: columnId
-                            });
-                        }
-                    });
-                    component.updateBoardWidth();
-                    window.addEventListener('resize', function (e) {
+                    setTimeout(function () {
+                        var startColumn;
+                        jQuery('#main').sortable({
+                            items: '.sortable-column',
+                            handler: '.header',
+                            connectWith: "#main",
+                            placeholder: "column-placeholder",
+                            dropOnEmpty: true,
+                            tolerance: 'pointer',
+                            start: function (event, ui) {
+                                ui.placeholder.height(ui.item.find('.column').outerHeight());
+                                startColumn = ui.item.parent();
+                            },
+                            stop: function (event, ui) {
+                                var columnId = ui.item.find('.column').attr('column-id');
+                                component.updateColumnOrder({
+                                    columnId: columnId
+                                });
+                            }
+                        }).disableSelection();
+                        //component.bindPane();;
+                        window.addEventListener('resize', function (e) {
+                            component.updateBoardWidth();
+                        });
                         component.updateBoardWidth();
-                    });
-                    //component.bindPane();;
+                        document.getElementById('content-wrapper').style.backgroundColor = '';
+                    }, 100);
                 };
                 BoardComponent.prototype.bindPane = function () {
-                    // let el = document.getElementById('content-wrapper');
-                    // el.addEventListener('mousemove', function(e) {
-                    //   e.preventDefault();
-                    //   if (curDown === true) {
-                    //     el.scrollLeft += (curXPos - e.pageX) * .25;// x > 0 ? x : 0;
-                    //     el.scrollTop += (curYPos - e.pageY) * .25;// y > 0 ? y : 0;
-                    //   }
-                    // });
-                    // el.addEventListener('mousedown', function(e) { 
-                    //   curDown = true; curYPos = e.pageY; curXPos = e.pageX; 
-                    // });
-                    // el.addEventListener('mouseup', function(e) { 
-                    //   curDown = false; 
-                    // });
+                    var el = document.getElementById('content-wrapper');
+                    el.addEventListener('mousemove', function (e) {
+                        e.preventDefault();
+                        if (curDown === true) {
+                            el.scrollLeft += (curXPos - e.pageX) * .25; // x > 0 ? x : 0;
+                            el.scrollTop += (curYPos - e.pageY) * .25; // y > 0 ? y : 0;
+                        }
+                    });
+                    el.addEventListener('mousedown', function (e) {
+                        if (e.srcElement.id === 'main' || e.srcElement.id === 'content-wrapper') {
+                            curDown = true;
+                        }
+                        curYPos = e.pageY;
+                        curXPos = e.pageX;
+                    });
+                    el.addEventListener('mouseup', function (e) {
+                        curDown = false;
+                    });
                 };
                 BoardComponent.prototype.updateBoardWidth = function () {
                     // this.boardWidth = ((this.board.columns.length + (this.columnsAdded > 0 ? 1 : 2)) * 280) + 10;

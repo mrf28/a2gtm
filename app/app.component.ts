@@ -1,6 +1,6 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Instruction } from 'angular2/router';
 import {BoardService} from './board/board.service';
 import {CardService} from './card/card.service';
 import {ColumnService} from './column/column.service';
@@ -22,5 +22,4 @@ import {DashboardComponent} from './dashboard/dashboard.component'
   { path: '/b/:id', name: 'Board', component: BoardComponent },
 ])
 export class AppComponent {
-
 }

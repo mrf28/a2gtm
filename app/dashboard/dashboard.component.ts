@@ -20,6 +20,9 @@ export class DashboardComponent implements OnInit {
     this._bs.getAll().subscribe((boards:Board[]) => {
       this.boards = boards;
     });
+    setTimeout(function() {
+      document.getElementById('content-wrapper').style.backgroundColor = "#fff";
+    }, 100);
   }
 
   public addBoard(){

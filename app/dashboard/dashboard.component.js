@@ -35,6 +35,9 @@ System.register(['angular2/core', 'angular2/router', '../board/board.service'], 
                     this._bs.getAll().subscribe(function (boards) {
                         _this.boards = boards;
                     });
+                    setTimeout(function () {
+                        document.getElementById('content-wrapper').style.backgroundColor = "#fff";
+                    }, 100);
                 };
                 DashboardComponent.prototype.addBoard = function () {
                     var _this = this;

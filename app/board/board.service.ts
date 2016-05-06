@@ -1,5 +1,6 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response} from 'angular2/http';
+import {Observable} from 'rxjs/Rx';
 import {HttpClient} from '../httpclient';
 import {Board} from '../board/board';
 import {Column} from '../column/column';
@@ -8,18 +9,22 @@ import {Card} from '../card/card';
 @Injectable()
 export class BoardService {
   apiUrl = '/board';
-  
+  boardsCache: Board[] = [];
+
   constructor(private _http: HttpClient) {
   }
 
   getAll() {
-    return this._http.get(this.apiUrl)
-      .map((res: Response) => <Board[]>res.json().data);
+    return this._http.get(this.apiUrl).map((res: Response) => <Board[]>res.json().data)
   }
 
   get(id: string) {
     return this._http.get(this.apiUrl + '/' + id)
       .map((res: Response) => <Board>res.json().data);
+  }
+
+  getBoardWithColumnsAndCards(id: string){
+    return Observable.forkJoin(this.get(id), this.getColumns(id), this.getCards(id));
   }
 
   getColumns(id: string) {
