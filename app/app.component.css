@@ -38,3 +38,26 @@ nav a.logo{
   overflow: auto;
   padding-top: 40px;
 }
+
+#disclaimer {
+  width: 80%;
+  margin: auto;
+  background-color: #eee;
+  padding: 15px;
+}
+
+#disclaimer h1 {
+  margin: 0;
+  text-decoration: underline;
+}
+
+#disclaimer .red {
+  color: red;
+}
+
+#disclaimer #closeButton {
+  float: right;
+  cursor: pointer;
+  cursor: hand;
+  text-decoration: none;
+}

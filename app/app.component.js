@@ -47,7 +47,20 @@ System.register(['angular2/core', 'angular2/http', 'angular2/router', './board/b
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
+                    this.showDisclaimer = true;
                 }
+                AppComponent.prototype.ngOnInit = function () {
+                    if (localStorage['disclaimerClosed'] === 'true') {
+                        this.showDisclaimer = false;
+                    }
+                    else {
+                        this.showDisclaimer = true;
+                    }
+                };
+                AppComponent.prototype.closeDisclaimer = function () {
+                    this.showDisclaimer = false;
+                    localStorage['disclaimerClosed'] = true;
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'gtm-app',

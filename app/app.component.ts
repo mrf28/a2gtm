@@ -21,5 +21,21 @@ import {DashboardComponent} from './dashboard/dashboard.component'
   { path: '/', name: 'Dashboard', component: DashboardComponent, useAsDefault: true },
   { path: '/b/:id', name: 'Board', component: BoardComponent },
 ])
-export class AppComponent {
+export class AppComponent implements OnInit {
+  showDisclaimer: boolean = true;
+  constructor(){
+  }
+
+  ngOnInit(){
+    if (localStorage['disclaimerClosed'] === 'true'){
+      this.showDisclaimer = false;
+    } else {
+      this.showDisclaimer = true;
+    }
+  }
+
+  closeDisclaimer(){
+    this.showDisclaimer = false;
+    localStorage['disclaimerClosed'] = true;
+  }
 }
