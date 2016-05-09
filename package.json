@@ -8,9 +8,6 @@
   },
   "scripts": {
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
-    "docker-build": "docker build -t a2gtm .",
-    "docker": "npm run docker-build && docker run -it --rm -p 3000:3000 -p 3001:3001 ng2-quickstart",
-    "e2e": "tsc && concurrently \"http-server\" \"protractor protractor.config.js\"",
     "lite": "lite-server",
     "postinstall": "typings install && tsc",
     "test": "tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
@@ -50,15 +47,8 @@
     "canonical-path": "0.0.2",
     "concurrently": "^2.0.0",
     "http-server": "^0.9.0",
-    "jasmine-core": "~2.4.1",
-    "karma": "^0.13.22",
-    "karma-chrome-launcher": "^0.2.3",
-    "karma-cli": "^0.1.2",
-    "karma-htmlfile-reporter": "^0.2.2",
-    "karma-jasmine": "^0.3.8",
     "lite-server": "^2.2.0",
     "morgan": "^1.7.0",
-    "protractor": "^3.2.2",
     "rimraf": "^2.5.2"
   },
   "repository": {}
