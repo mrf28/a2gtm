@@ -8,3 +8,7 @@ npm-debug.log
 *.js.map
 _test-output
 _temp
+.editorconfig
+CHANGELOG.md
+app/**/*.js
+app/**/*.js.map
