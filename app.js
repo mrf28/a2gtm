@@ -45,15 +45,24 @@ var mongoUri = process.env.MONGO_URI || 'mongodb://localhost/gtm';
 
 console.log(mongoUri);
 var mongoose = require('mongoose');
-mongoose.connect(mongoUri);
+mongoose.connect(mongoUri, function () {
+  // Provisional code, for runing db.dropDatabase() every startup, 
+  // while running free dyno that sleeps 6 hours per day
+  mongoose.connection.db.dropDatabase(function (){
+    log('db droped');
+  });
+});
+
 var cardRoutes = require('./api/routes/card.routes.js')(app);
 var columnRoutes = require('./api/routes/column.routes.js')(app);
 var boardRoutes = require('./api/routes/board.routes.js')(app);
 
+// This may not be achieved in free dyno
 var j = schedule.scheduleJob({hour: 0}, function(){
   log('droping db');
-  mongoose.connection.db.dropDatabase();
-  log('db droped');
+  mongoose.connection.db.dropDatabase(function (){
+    log('db droped');
+  });
 });
 
 server.listen(port, function () {
