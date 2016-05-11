@@ -5,7 +5,12 @@ var express = require('express')
     , app = express()
     , port = process.env.PORT || 3000
     , router = express.Router()
-    , log = require('./dev-logger.js');
+    , log = require('./dev-logger.js')
+    , schedule = require('node-schedule');
+
+var j = schedule.scheduleJob('42 * * * *', function(){
+  console.log('The answer to life, the universe, and everything!');
+});
 
 var server = require('http').createServer(app);
 
@@ -44,6 +49,12 @@ mongoose.connect(mongoUri);
 var cardRoutes = require('./api/routes/card.routes.js')(app);
 var columnRoutes = require('./api/routes/column.routes.js')(app);
 var boardRoutes = require('./api/routes/board.routes.js')(app);
+
+var j = schedule.scheduleJob({hour: 0}, function(){
+  log('droping db');
+  mongoose.connection.db.dropDatabase();
+  log('db droped');
+});
 
 server.listen(port, function () {
   log('App running on port', port);
