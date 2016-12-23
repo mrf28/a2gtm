@@ -2,6 +2,7 @@
 <h2>Boards</h2>
 <div id="boards">
   <a class="board" *ngFor="#board of boards" [routerLink]="['Board', {id: board._id}]">
+    <span  class="cancel" (click)="deleteBoard(board)">X</span>
     <span class="title">{{board?.title}}</span>
   </a>
   <a href="#" class="board add-board" (click)="addBoard()">

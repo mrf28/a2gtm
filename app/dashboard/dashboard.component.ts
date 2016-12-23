@@ -32,4 +32,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  public deleteBoard(board: Board)
+  {
+    this._bs.delete(board);
+  }
+
 }
