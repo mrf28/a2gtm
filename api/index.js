@@ -5,6 +5,9 @@ var morgan = require('morgan');
 
 var app = express();
 var mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+
 mongoose.connect('mongodb://localhost/gtm');
 
 app.use(cors());

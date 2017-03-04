@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
 console.log('inializing Schema');
 var boardSchema = mongoose.Schema({
     title: String

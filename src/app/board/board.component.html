@@ -1,0 +1,29 @@
+<div *ngIf="board" class="board-title">
+  <span [style.display]="editingTilte ? 'none' : ''" (click)="editTitle()">{{ board?.title }}</span>
+
+  <input  
+    [style.display]="editingTilte ? '' : 'none' "
+    (keyup)="blurOnEnter($event)"
+    (blur)="updateBoard()"
+    [(ngModel)]="board.title" />  
+</div>
+
+<section *ngIf="board" id="main" >
+  <div *ngFor="let column of board.columns | orderBy : 'order'" class="sortable-column">
+  <!-- <div *ngFor="#column of board.columns" class="sortable-column"> -->
+    <gtm-column [column]="column"
+        (onAddCard)="addCard($event)"
+        [cards]="board.cards">
+    </gtm-column>
+  </div>
+  <div class="add-column"
+       (click)="enableAddColumn()" >
+  	<span [style.display]="addingColumn ? 'none' : ''" >Add a list...</span>
+   
+    <input  
+	    [style.display]="addingColumn ? '' : 'none' "
+	    (keyup)="addColumnOnEnter($event)"
+	    (blur)="addColumnOnBlur()"
+	    [(ngModel)]="addColumnText" />
+  </div>
+</section>

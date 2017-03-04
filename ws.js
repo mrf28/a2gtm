@@ -13,7 +13,7 @@
 var log = require('./dev-logger.js');
 
 module.exports = function(server, origins) {
-
+    log("Running socket.io server");
     var io = require('socket.io').listen(server);
 
     if (origins) {

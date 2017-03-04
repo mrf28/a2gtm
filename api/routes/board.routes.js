@@ -2,12 +2,13 @@ var _ = require('lodash');
 var Board = require('../models/board.js');
 var Card = require('../models/card.js');
 var Column = require('../models/column.js');
+var log = require('../../dev-logger.js');
 
 module.exports = function(app) {
-    //console.log('starting board routes');
+    log('starting board routes');
     /* Create */
     app.post('/board', function (req, res) {
-        //console.log('POST /board', req.body);
+        log('POST /board', req.body);
         var newBoard = new Board(req.body);
         newBoard.save(function(err, newBoard) {
             if (err) {
@@ -19,7 +20,7 @@ module.exports = function(app) {
 
     /* Read */
     app.get('/board', function (req, res) {
-        //console.log('GET /board');
+        log('GET /board');
         Board.find(function(err, boards) {
             if (err) {
                 res.json({info: 'error during find boards', error: err});
@@ -44,7 +45,7 @@ module.exports = function(app) {
     });
 
     app.get('/board/:id/columns', function (req, res) {
-        //console.log('GET /board/:id');
+        log('GET /board/:id');
         Board.findById(req.params.id, function(err, board) {
             if (err) {
                 res.json({info: 'error during find board', error: err});
@@ -60,7 +61,7 @@ module.exports = function(app) {
     });
 
     app.get('/board/:id/cards', function (req, res) {
-        //console.log('GET /column/:id');
+        log('GET /column/:id');
         Board.findById(req.params.id, function(err, board) {
             if (err) {
                 res.json({info: 'error during find board', error: err});
@@ -77,15 +78,15 @@ module.exports = function(app) {
 
     /* Update */
     app.put('/board/:id', function (req, res) {
-        //console.log('PUT /board/:id', req.body);
+        log('PUT /board/:id', req.body);
         Board.findById(req.params.id, function(err, board) {
             if (err) {
                 res.json({info: 'error during find board', error: err});
             };
             if (board) {
-                //console.log('POST /board', board);
+                log('POST /board', board);
                 _.merge(board, req.body);
-                //console.log('POST /board', board);
+                log('POST /board', board);
                 board.save(function(err) {
                     if (err) {
                         res.json({info: 'error during board update', error: err});
@@ -101,7 +102,7 @@ module.exports = function(app) {
 
     /* Delete */
     app.delete('/board/:id', function (req, res) {
-        //console.log('DELETE /board/:id');
+        log('DELETE /board/:id');
         Board.findByIdAndRemove(req.params.id, function(err) {
             if (err) {
                 res.json({info: 'error during remove board', error: err});

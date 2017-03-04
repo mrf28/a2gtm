@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 var cardSchema = mongoose.Schema({
     title: String,
