@@ -3,6 +3,7 @@
   padding: 2em;
   background-color: white;
   min-height: calc(100% - 4em);
+  display: inline-block;
 }
 
 h2 { 

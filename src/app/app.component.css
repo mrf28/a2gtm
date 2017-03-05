@@ -35,7 +35,7 @@ nav a.logo{
   width: 100%;
   display: block;
   height: calc(100% - 40px);
-  overflow: auto;
+  /*overflow: auto;*/
   padding-top: 40px;
 }
 

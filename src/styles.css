@@ -3,6 +3,8 @@ body {
   margin: 0;
   background-color: #0079BF; 
   height: 100%;
+  width: 100%;
+  position: absolute;
 }
 body, input[text], button { 
   color: #333; 
