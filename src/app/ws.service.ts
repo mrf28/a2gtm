@@ -42,6 +42,10 @@ export class WebSocketService {
     this.socket.emit('joinBoard', boardId);
   }
 
+  leave(boardId: string) {
+    this.socket.emit('leaveBoard', boardId);
+  }
+
   addColumn(boardId:string, column: Column){
     this.socket.emit('addColumn', { boardId: boardId, column: column });
   }

@@ -63,4 +63,3 @@ var boardRoutes = require('./api/routes/board.routes.js')(app);
 server.listen(port, function () {
   log('App running on port', port);
 });
-

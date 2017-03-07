@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, AfterViewInit, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Board } from '../board/board';
 import { Column } from '../column/column';
@@ -21,7 +21,7 @@ var curYPos = 0,
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
   board: Board;
   addingColumn = false;
   addColumnText: string;
@@ -41,26 +41,35 @@ export class BoardComponent implements OnInit {
   ngOnInit() {
     this._ws.connect();
     this._ws.onColumnAdd.subscribe(column => {
+      console.log('adding column from server');
       this.board.columns.push(column);
       this.updateBoardWidth();
     });
 
     this._ws.onCardAdd.subscribe(card => {
+      console.log('adding card from server');
       this.board.cards.push(card);
     });
 
     let boardId = this._route.snapshot.params['id'];
 
     //let boardId = this._routeParams.get('id');
-    this._ws.join(boardId);
     this._boardService.getBoardWithColumnsAndCards(boardId)
       .subscribe(data => {
+        console.log(`joining board ${boardId}`);
+        this._ws.join(boardId);
+    
         this.board = data[0];
         this.board.columns = data[1];
         this.board.cards = data[2];
         document.title = this.board.title + " | Generic Task Manager";
-        this.setupView();
+        this.setupView();        
       });
+  }
+
+  ngOnDestroy(){
+    console.log(`leaving board ${this.board._id}`);
+    this._ws.leave(this.board._id);
   }
 
   setupView() {
@@ -224,8 +233,7 @@ export class BoardComponent implements OnInit {
     let newColumn = <Column>{
       title: this.addColumnText,
       order: (this.board.columns.length + 1) * 1000,
-      boardId: this.board._id,
-      //cards: []
+      boardId: this.board._id
     };
     this._columnService.post(newColumn)
       .subscribe(column => {
@@ -235,7 +243,6 @@ export class BoardComponent implements OnInit {
         this.addColumnText = '';
         this._ws.addColumn(this.board._id, column);
       });
-
   }
 
   addColumnOnEnter(event: KeyboardEvent) {
@@ -265,7 +272,6 @@ export class BoardComponent implements OnInit {
 
 
   addCard(card: Card) {
-    console.log(card);
     this.board.cards.push(card);
   }
 

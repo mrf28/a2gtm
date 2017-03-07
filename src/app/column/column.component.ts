@@ -45,11 +45,6 @@ export class ColumnComponent implements OnInit {
         this.column.order = column.order;
       }
     });
-    // this._ws.onCardUpdate.subscribe(card => {
-    //   // console.log('a');
-    //   this.cards.filter(c => c._id === card._id)[0] = card;
-    // });
-
   }
 
   setupView() {
@@ -144,7 +139,6 @@ export class ColumnComponent implements OnInit {
     };
     this._cardService.post(newCard)
       .subscribe(card => {
-        //this.cards.push(card);
         this.onAddCard.emit(card);
         this._ws.addCard(card.boardId, card);
       });
