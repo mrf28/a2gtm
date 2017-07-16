@@ -5,7 +5,8 @@ var cardSchema = mongoose.Schema({
     title: String,
     columnId: String,
     boardId: String,
-    order: Number
+    order: Number,
+    description: String,
 });
 
 module.exports = mongoose.model('Card', cardSchema);

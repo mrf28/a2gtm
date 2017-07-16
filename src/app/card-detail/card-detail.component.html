@@ -1,0 +1,17 @@
+<div class="modal-wrapper" (click)="close($event)">
+<div class="detail-container"  (click)="stopPropagation($event)" >
+    <span class="close-btn" (click)="close($event)"></span>
+    <div class="title-container">
+        <span class="title"
+            (click)="editTitle($event)" 
+            [innerHtml]="card.title" 
+            [style.display]="editingCard ? 'none' : ''">
+        </span>
+        <textarea [style.display]="editingCard ? '' : 'none' " 
+            (keydown)="blurOnEnterTitle($event)" 
+            (blur)="updateTitle()" 
+            [(ngModel)]="card.title">
+        </textarea>
+    </div>
+</div>
+</div>

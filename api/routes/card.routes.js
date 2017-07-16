@@ -28,9 +28,10 @@ module.exports = function(app) {
     });
 
     app.get('/card/:id', function (req, res) {
-        log('GET /card/:id');
+        console.log('GET /card/:id', req.params.id);
         Card.findById(req.params.id, function(err, card) {
             if (err) {
+                log(err);
                 res.json({info: 'error during find card', error: err});
             };
             if (card) {
@@ -43,9 +44,10 @@ module.exports = function(app) {
 
     /* Update */
     app.put('/card/:id', function (req, res) {
-        log('PUT /card/:id');
+        log('PUT /card/:id', req.params.id);
         Card.findById(req.params.id, function(err, card) {
             if (err) {
+                log(err);
                 res.json({info: 'error during find card', error: err});
             };
             if (card) {

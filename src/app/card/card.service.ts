@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import {HttpClient} from '../httpclient';
 import {Card} from '../card/card';
 
@@ -12,12 +12,12 @@ export class CardService {
 
   getAll() {
     return this._http.get(this.apiUrl)
-      .map(res => res.json());
+      .map((res: Response) => <Card[]>res.json().data);
   }
 
   get(id: string) {
     return this._http.get(this.apiUrl + '/' + id)
-      .map(res => res.json());
+      .map((res: Response) => <Card>res.json().data);
   }
 
   put(card: Card) {

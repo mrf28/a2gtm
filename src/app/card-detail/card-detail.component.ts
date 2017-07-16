@@ -1,43 +1,42 @@
 import {Component, OnInit, Input, Output, EventEmitter, ElementRef, ChangeDetectorRef, NgZone} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {Card} from './card';
+import {Card} from '../card/card';
 import {Column} from '../column/column';
-import {CardService} from './card.service';
+import {CardService} from '../card/card.service';
 import {WebSocketService} from '../ws.service';
 
 @Component({
-  selector: 'gtm-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css'],
+  selector: 'gtm-card-detail',
+  templateUrl: './card-detail.component.html',
+  styleUrls: ['./card-detail.component.css'],
 })
-export class CardComponent implements OnInit {
-  @Input()
+export class CardDetailComponent implements OnInit {
   card: Card;
-  @Output() cardUpdate: EventEmitter<Card>;
   editingCard = false;
   currentTitle: string;
-  zone: NgZone;
   constructor(private el: ElementRef,
     private route: ActivatedRoute,
     private router: Router,
     private _ref: ChangeDetectorRef,
     private _ws: WebSocketService,
     private _cardService: CardService) {
-    this.zone = new NgZone({ enableLongStackTrace: false });
-    this.cardUpdate = new EventEmitter();
+    this.card = new Card();
   }
 
   ngOnInit() {
+    let id = this.route.snapshot.params["id"];
+    this._cardService.get(id).subscribe((card: Card) =>{
+        this.card = card;
+    });
+
     this._ws.onCardUpdate.subscribe((card: Card) => {
       if (this.card._id === card._id) {
-        this.card.title = card.title;
-        this.card.order = card.order;
-        this.card.columnId = card.columnId;
+        this.card = card;
       }
     });
   }
 
-  blurOnEnter(event) {
+  blurOnEnterTitle(event) {
     if (event.keyCode === 13) {
       event.target.blur();
     } else if (event.keyCode === 27) {
@@ -45,8 +44,9 @@ export class CardComponent implements OnInit {
       this.editingCard = false;
     }
   }
-
-  editCard() {
+  
+  editTitle(e) {
+    e.stopPropagation();
     this.editingCard = true;
     this.currentTitle = this.card.title;
 
@@ -57,7 +57,7 @@ export class CardComponent implements OnInit {
     }, 0);
   }
 
-  updateCard() {
+  updateTitle(e) {
     if (!this.card.title || this.card.title.trim() === '') {
       this.card.title = this.currentTitle;
     }
@@ -68,7 +68,14 @@ export class CardComponent implements OnInit {
     this.editingCard = false;
   }
 
-  showDetail(){
-      this.router.navigate([this.card._id], { relativeTo: this.route });
+  close(e){    
+    e.stopPropagation();
+    this.router.navigate(['../'], { relativeTo: this.route });
+      //this.router.navigate("");
   }
+
+  stopPropagation(e){
+    e.stopPropagation();
+  }
+
 }

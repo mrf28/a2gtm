@@ -17,13 +17,21 @@ import { DashboardComponent } from './dashboard/dashboard.component'
 import { BoardComponent } from './board/board.component';
 import { ColumnComponent } from './column/column.component';
 import { CardComponent } from './card/card.component';
+import { CardDetailComponent } from './card-detail/card-detail.component';
 
 // PIPES
 import { OrderBy } from './pipes/orderby.pipe';
 import { Where } from './pipes/where.pipe';
 
 const appRoutes: Routes = [
-  { path: 'b/:id', component: BoardComponent },
+  {
+     path: 'b/:id', component: BoardComponent,
+     children: [ 
+        {
+          path: ':id', component: CardDetailComponent,
+        }
+     ]
+  },
   { path: '', component: DashboardComponent },
 ];
 
@@ -34,6 +42,7 @@ const appRoutes: Routes = [
     BoardComponent,
     ColumnComponent,
     CardComponent,
+    CardDetailComponent,
     OrderBy,
     Where,
   ],

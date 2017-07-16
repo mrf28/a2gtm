@@ -1,0 +1,67 @@
+.modal-wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .6);
+    display: flex;
+    justify-content: center;
+}
+
+.detail-container {
+    width: 730px;
+    margin: 3pc 0 5pc;
+    background-color: #EDEFF0;
+    border-radius: 4px;
+}
+
+.title-container {
+    margin: 18px 50px 4px 50px;
+}
+
+.title-container textarea {
+    line-height: 24px;
+    height: 24px;
+    border: none;
+    resize: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin: -2px;
+    width: 100%;
+}
+
+.title-container textarea:active, .title-container textarea:focus{
+    outline: none;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+    width: 100%;
+    display: inline-block;
+}
+
+.close-btn {
+    font-size: 38px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+    float: right;
+    text-align: center;
+    font-weight: bold;
+    font-family: serif;
+    color: rgba(0, 0, 0, .3);
+    cursor: pointer;
+    cursor: hand;
+    transition: color ease-in 150ms;
+}
+.close-btn::before { 
+    content: "\0000D7";
+}
+.close-btn:hover {
+    color: rgba(0, 0, 0, .6);
+    transition: color ease-out 150ms;
+}

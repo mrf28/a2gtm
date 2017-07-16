@@ -43,3 +43,6 @@
     margin: -2px;
 }
 
+.card textarea:focus, .card textarea:active {
+  outline: none;
+}
