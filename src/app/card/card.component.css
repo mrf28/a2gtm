@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   background-color: #fff;   
   text-decoration: none;
   padding: 7px;
@@ -24,7 +25,8 @@
 }
 
 .card:hover{
-  background-color: #ddd;
+  background-color: #EDEFF0;
+  border-bottom-color: #D6DADC;
 }
 
 .card textarea {
@@ -45,4 +47,34 @@
 
 .card textarea:focus, .card textarea:active {
   outline: none;
+}
+
+.edit{  
+  background-clip: padding-box;
+  background-origin: padding-box;
+  border-radius: 3px;
+  opacity: .8;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  visibility: hidden;
+  z-index: 40;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
+}
+
+.card:hover .edit{
+  visibility: visible; 
+  color: #999;
+}
+
+.edit:hover {
+  background-color: #ddd;
+}
+
+.fa {
+  font-size: 12px;
+  line-height: 12px;
 }

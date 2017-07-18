@@ -7,6 +7,11 @@
     background: rgba(0, 0, 0, .6);
     display: flex;
     justify-content: center;
+    overflow: auto;
+}
+
+.wrapper {
+    flex: 0 0 730px;
 }
 
 .detail-container {
@@ -14,6 +19,8 @@
     margin: 3pc 0 5pc;
     background-color: #EDEFF0;
     border-radius: 4px;
+    float: left;
+    padding-bottom: 16px;
 }
 
 .title-container {
@@ -98,6 +105,7 @@
     resize: none;
     padding: 7px;
     margin-bottom: 4px;
+    overflow: hidden;
 }
 
 .description-text{
@@ -105,6 +113,7 @@
     display: block;    
     cursor: pointer;
     cursor: hand;
+    margin: 0;
 }
 
 .muted {    

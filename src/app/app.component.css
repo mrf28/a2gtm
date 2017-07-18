@@ -21,6 +21,13 @@ nav a.btn {
   width: 80px;
 }
 
+nav a.btn .fa {  
+    font-size: 18px;
+    margin-right: 4px;    
+    margin-left: 2px;
+    line-height: 12px;
+}
+
 nav a.logo{
   line-height: 30px;
   font-weight: bold;
@@ -61,3 +68,4 @@ nav a.logo{
   cursor: hand;
   text-decoration: none;
 }
+

@@ -79,14 +79,31 @@ export class CardDetailComponent implements OnInit {
     }
   }
   
+  adjustHeight(event: Event){
+    let el = <HTMLElement>event.srcElement;
+    this.adjustTextAreaHeight(el);
+  }
+
+  adjustTextAreaHeight(el: HTMLElement){
+    el.style.height = '0';
+    let height = el.scrollHeight + 4;
+    if (height >= 108){
+      if (el.style.height != (height + 'px'))
+        el.style.height = height + 'px';
+    } else {
+        el.style.height = height + '108px';
+    }
+  }
+
   editDescription() {
     this.editingDescription = true;
     this.currentDescription = this.card.description;
-    console.log(this.el);
     let textArea = this.el.nativeElement.querySelector('#descriptionEditor');
 
+    var that = this;
     setTimeout(function() {
       textArea.focus();
+      that.adjustTextAreaHeight(textArea);
     }, 0);
   }
 

@@ -46,7 +46,8 @@ export class CardComponent implements OnInit {
     }
   }
 
-  editCard() {
+  editCard(e) {
+    e.stopPropagation();
     this.editingCard = true;
     this.currentTitle = this.card.title;
 
@@ -69,6 +70,8 @@ export class CardComponent implements OnInit {
   }
 
   showDetail(){
-      this.router.navigate([this.card._id], { relativeTo: this.route });
+      if (!this.editingCard){
+        this.router.navigate([this.card._id], { relativeTo: this.route });
+      }
   }
 }

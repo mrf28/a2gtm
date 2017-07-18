@@ -1,6 +1,7 @@
 <div class="modal-wrapper" (click)="close($event)">
+    <div class="wrapper">
     <div class="detail-container"  (click)="stopPropagation($event)" >
-        <span class="close-btn" (click)="close()"></span>
+        <span class="close-btn" (click)="close($event)"></span>
         <div class="title-container">
             <span class="title"
                 (click)="editTitle()" 
@@ -37,12 +38,12 @@
                         <div class="description" 
                             (click)="editDescription()" 
                             [style.display]="editingDescription ? 'none' : ''">
-                            <span class="description-text" [innerHtml]="card.description">
-                            </span>
+                            <pre class="description-text" [innerHtml]="card.description">
+                            </pre>
                         </div>
                         <div class="editing-container"  [style.display]="editingDescription ? '' : 'none' " >
                         <textarea id="descriptionEditor" class="no-hilight" placeholder="Add a more detailed description…"
-                            (keydown)="blurOnEnterDescription($event)" 
+                            (keyup)="adjustHeight($event)" 
                             [(ngModel)]="card.description">
                         </textarea>
                         <button class="save-btn" (click)="updateDescription()">Save</button>
@@ -59,5 +60,6 @@
                 </ul>
             </div>
         </div>
+    </div>
     </div>
 </div>

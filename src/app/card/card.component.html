@@ -1,9 +1,12 @@
 <li class="card" 
     [attr.card-id]="card._id"
     [attr.card-order]="card.order"
-    (dblclick)="editCard()"
     (click)="showDetail()"
     >
+    <div class="edit" (click)="editCard($event)"
+        [style.display]="editingCard ? 'none' : ''">
+        <i class="fa fa-pencil"></i>
+    </div>
     <span [innerHtml]="card.title" [style.display]="editingCard ? 'none' : ''">
     </span>
     <textarea
