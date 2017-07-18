@@ -11,16 +11,18 @@ import {WebSocketService} from '../ws.service';
   styleUrls: ['./card-detail.component.css'],
 })
 export class CardDetailComponent implements OnInit {
-  card: Card;
+  card:Card = new Card();
   editingCard = false;
+  editingDescription = false;
   currentTitle: string;
+  currentDescription: string;
+  
   constructor(private el: ElementRef,
     private route: ActivatedRoute,
     private router: Router,
     private _ref: ChangeDetectorRef,
     private _ws: WebSocketService,
     private _cardService: CardService) {
-    this.card = new Card();
   }
 
   ngOnInit() {
@@ -45,8 +47,7 @@ export class CardDetailComponent implements OnInit {
     }
   }
   
-  editTitle(e) {
-    e.stopPropagation();
+  editTitle() {
     this.editingCard = true;
     this.currentTitle = this.card.title;
 
@@ -57,7 +58,7 @@ export class CardDetailComponent implements OnInit {
     }, 0);
   }
 
-  updateTitle(e) {
+  updateTitle() {
     if (!this.card.title || this.card.title.trim() === '') {
       this.card.title = this.currentTitle;
     }
@@ -66,6 +67,41 @@ export class CardDetailComponent implements OnInit {
       this._ws.updateCard(this.card.boardId, this.card);
     });
     this.editingCard = false;
+  }
+
+  
+  blurOnEnterDescription(event) {
+    if (event.keyCode === 13) {
+      event.target.blur();
+    } else if (event.keyCode === 27) {
+      this.card.description = this.currentDescription;
+      this.editingDescription = false;
+    }
+  }
+  
+  editDescription() {
+    this.editingDescription = true;
+    this.currentDescription = this.card.description;
+    console.log(this.el);
+    let textArea = this.el.nativeElement.querySelector('#descriptionEditor');
+
+    setTimeout(function() {
+      textArea.focus();
+    }, 0);
+  }
+
+  updateDescription() {
+    this.card.description = this.card.description.trim();
+    
+    this._cardService.put(this.card).then(res => {
+      this._ws.updateCard(this.card.boardId, this.card);
+    });
+    this.editingDescription = false;
+  }
+
+  cancelEditDescription() {
+    this.card.description = this.currentDescription;
+    this.editingDescription = false;
   }
 
   close(e){    

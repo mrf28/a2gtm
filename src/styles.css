@@ -9,6 +9,12 @@ body {
 body, input[text], button { 
   color: #333; 
 }
+body, button, html, input, select, textarea {
+    color: #4d4d4d;
+    font: 14px "Helvetica Neue",Arial,Helvetica,sans-serif;
+    line-height: 18px;
+    box-sizing: border-box;
+}
 a {
   cursor: pointer;
   cursor: hand;
@@ -63,4 +69,8 @@ li.card-placeholder {
 
 #main > div {
   float: left;
+}
+
+.no-hilight:active, .no-hilight:focus {
+  outline: none;
 }

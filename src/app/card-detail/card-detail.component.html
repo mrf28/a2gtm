@@ -1,17 +1,63 @@
 <div class="modal-wrapper" (click)="close($event)">
-<div class="detail-container"  (click)="stopPropagation($event)" >
-    <span class="close-btn" (click)="close($event)"></span>
-    <div class="title-container">
-        <span class="title"
-            (click)="editTitle($event)" 
-            [innerHtml]="card.title" 
-            [style.display]="editingCard ? 'none' : ''">
-        </span>
-        <textarea [style.display]="editingCard ? '' : 'none' " 
-            (keydown)="blurOnEnterTitle($event)" 
-            (blur)="updateTitle()" 
-            [(ngModel)]="card.title">
-        </textarea>
+    <div class="detail-container"  (click)="stopPropagation($event)" >
+        <span class="close-btn" (click)="close()"></span>
+        <div class="title-container">
+            <span class="title"
+                (click)="editTitle()" 
+                [innerHtml]="card.title" 
+                [style.display]="editingCard ? 'none' : ''">
+            </span>
+            <textarea [style.display]="editingCard ? '' : 'none' " 
+                (keydown)="blurOnEnterTitle()" 
+                (blur)="updateTitle()" 
+                [(ngModel)]="card.title">
+            </textarea>
+        </div>
+        <div class="main-container">
+            <div class="main">
+                <div class="labels-container" *ngIf="card.labels?.length">
+                    <span class="muted">Labels</span>
+                    <div *ngFor="let lable of card.labels" class="label" ngClass="label.color" [innerHtml]="label.label"></div>
+                    <div class="add-label">+</div>
+                </div>
+                <div class="description-conainter">
+                    <div class="edit-btn" 
+                        (click)="editDescription()" 
+                        [style.display]="card.description || editingDescription ? 'none': ''">
+                        <i class="fa fa-align-left"></i>
+                        Edit the description...
+                    </div>
+                    <div class="description-text" [style.display]="card.description || editingDescription ? '' : 'none'">
+                        <span class="muted">Description 
+                            <span class="edit-text"(click)="editDescription()" 
+                                [style.display]="editingDescription ? 'none': ''">
+                                Edit
+                            </span>
+                        </span>
+                        <div class="description" 
+                            (click)="editDescription()" 
+                            [style.display]="editingDescription ? 'none' : ''">
+                            <span class="description-text" [innerHtml]="card.description">
+                            </span>
+                        </div>
+                        <div class="editing-container"  [style.display]="editingDescription ? '' : 'none' " >
+                        <textarea id="descriptionEditor" class="no-hilight" placeholder="Add a more detailed description…"
+                            (keydown)="blurOnEnterDescription($event)" 
+                            [(ngModel)]="card.description">
+                        </textarea>
+                        <button class="save-btn" (click)="updateDescription()">Save</button>
+                        <span class="cancel-btn" (click)="cancelEditDescription()"></span> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <span class="title">Add</span>
+                <ul class="items">
+                    <li class="item"><i class="fa fa-tag fa-rotate-270"></i> Labels</li>
+                    <li class="item"><i class="fa fa-check-square-o"></i> Checklist</li>
+                </ul>
+            </div>
+        </div>
     </div>
-</div>
 </div>

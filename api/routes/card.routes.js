@@ -24,7 +24,7 @@ module.exports = function(app) {
                 res.json({info: 'error during find cards', error: err});
             };
             res.json({info: 'cards found successfully', data: cards});
-        });
+        }).populate('labels').exec();
     });
 
     app.get('/card/:id', function (req, res) {
@@ -39,7 +39,7 @@ module.exports = function(app) {
             } else {
                 res.json({info: 'card not found'});
             }
-        });
+        }).populate('labels').exec();
     });
 
     /* Update */

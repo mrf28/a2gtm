@@ -17,7 +17,7 @@
 }
 
 .title-container {
-    margin: 18px 50px 4px 50px;
+    margin: 18px 50px 24px 50px;
 }
 
 .title-container textarea {
@@ -64,4 +64,169 @@
 .close-btn:hover {
     color: rgba(0, 0, 0, .6);
     transition: color ease-out 150ms;
+}
+
+.main-container {
+    display: flex;
+}
+
+.main-container > div {
+    flex-grow: 1;
+    padding: 8px;
+}
+
+.main {
+    width: 520px;
+}
+
+.main-container > .actions {
+    padding-left: 0;
+    padding-right: 12px;
+}
+
+.description-conainter {
+    padding-left: 42px;
+    padding-right: 12px;
+}
+
+.description-conainter textarea {
+    width: 100%;
+    height: 108px;
+    border-radius: 4px;
+    background: rgba(0,0,0,.03);
+    border-color: rgba(0,0,0,.15);
+    resize: none;
+    padding: 7px;
+    margin-bottom: 4px;
+}
+
+.description-text{
+    width: 100%;
+    display: block;    
+    cursor: pointer;
+    cursor: hand;
+}
+
+.muted {    
+    color: #8c8c8c;
+    display: inline-block;
+    font-weight: 400;
+    font-size: 14px;
+    margin: 0 6px 6px 0;
+}
+
+.edit-text{
+    text-decoration: underline;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.edit-text:hover{
+    color: #444;
+}
+
+.save-btn{
+    float: left;
+    background: linear-gradient(to bottom,#61BD4F 0,#5AAC44 100%);
+    box-shadow: 0 1px 0 #3F6F21;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
+    line-height: 22px;
+    margin: 8px 4px 0 0;
+    padding: 7px 20px;
+    text-align: center;
+    height: 2pc;
+    margin-top: -2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: none;
+    border-radius: 4px;
+}
+
+.cancel-btn{
+    float: left;
+    font-size: 34px;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    font-family: serif;
+    color: rgba(0, 0, 0, .3);
+    cursor: pointer;
+    cursor: hand;
+    transition: color ease-in 150ms;
+    margin-top: -2px;
+}
+.cancel-btn::before { 
+    content: "\0000D7";
+}
+.cancel-btn:hover {
+    color: rgba(0, 0, 0, .6);
+    transition: color ease-out 150ms;
+}
+
+.actions .items {
+    margin: 0;
+    padding-left: 0;
+    padding-top: 0;
+    width: 100%;
+    list-style: none;
+}
+
+.actions .items > .item {
+    background: linear-gradient(to bottom,#fff 0,#F8F9F9 100%);
+    box-sizing: border-box;
+    border: 1px solid #E2E4E6;
+    border-bottom-color: #CDD2D4;
+    cursor: pointer;
+    display: block;
+    font-weight: 700;
+    height: 34px;
+    margin-top: 6px;
+    max-width: 300px;
+    overflow: hidden;
+    padding: 7px;
+    position: relative;
+    text-overflow: ellipsis;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 3px;
+}
+
+.actions .items > .item:hover {
+    background: #298FCA;
+    border-color: #298FCA #298FCA #026AA7;
+    color: white;
+}
+.actions .items > .item:hover .fa {
+    color: white;
+}
+
+.actions .title {
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.fa {
+    color: #999;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+}
+
+.edit-btn {
+    padding: 6px 8px;
+    text-decoration: underline;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.edit-btn:hover {
+    background: #D6DADC;
 }
