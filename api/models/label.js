@@ -6,4 +6,4 @@ var labelSchema = mongoose.Schema({
     color: String
 });
 
-module.exports = mongoose.model('Label', cardSchema);
+module.exports = mongoose.model('Label', labelSchema);

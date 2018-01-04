@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, ElementRef, ChangeDetectorRef, NgZone} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ElementRef, NgZone} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Card} from './card';
 import {Column} from '../column/column';
@@ -20,7 +20,6 @@ export class CardComponent implements OnInit {
   constructor(private el: ElementRef,
     private route: ActivatedRoute,
     private router: Router,
-    private _ref: ChangeDetectorRef,
     private _ws: WebSocketService,
     private _cardService: CardService) {
     this.zone = new NgZone({ enableLongStackTrace: false });

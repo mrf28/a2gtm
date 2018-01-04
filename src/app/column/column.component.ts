@@ -55,6 +55,7 @@ export class ColumnComponent implements OnInit {
       placeholder: "card-placeholder",
       dropOnEmpty: true,
       tolerance: 'pointer',
+      helper : 'clone',
       start: function(event, ui) {
         ui.placeholder.height(ui.item.outerHeight());
         startColumn = ui.item.parent();
@@ -135,11 +136,13 @@ export class ColumnComponent implements OnInit {
       title: this.addCardText,
       order: (this.cards.length + 1) * 1000,
       columnId: this.column._id,
-      boardId: this.column.boardId
+      boardId: this.column.boardId,
+      labels: [],
+      checklists: []
     };
     this._cardService.post(newCard)
       .subscribe(card => {
-        this.onAddCard.emit(card);
+        //this.onAddCard.emit(card);
         this._ws.addCard(card.boardId, card);
       });
   }

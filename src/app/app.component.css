@@ -2,6 +2,7 @@ header {
   position: fixed;
   width: 100%;
   top: 0;
+  z-index: 1000;
 }
 
 
@@ -44,6 +45,7 @@ nav a.logo{
   height: calc(100% - 40px);
   /*overflow: auto;*/
   padding-top: 40px;
+  transition: background-color ease-in 150ms;
 }
 
 #disclaimer {

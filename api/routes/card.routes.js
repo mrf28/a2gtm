@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var Label = require('../models/label.js');
 var Card = require('../models/card.js');
 var log = require('../../dev-logger.js');
 

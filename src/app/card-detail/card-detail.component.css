@@ -27,19 +27,14 @@
     margin: 18px 50px 24px 50px;
 }
 
-.title-container textarea {
+.title-container input {
     line-height: 24px;
     height: 24px;
     border: none;
     resize: none;
     font-size: 18px;
     font-weight: bold;
-    margin: -2px;
     width: 100%;
-}
-
-.title-container textarea:active, .title-container textarea:focus{
-    outline: none;
 }
 
 .title {
@@ -48,6 +43,13 @@
     line-height: 24px;
     width: 100%;
     display: inline-block;
+}
+
+.top-icon {
+    float: left;
+    margin-left: -34px;
+    font-size: 20px;
+    margin-top: 2px;
 }
 
 .close-btn {
@@ -98,7 +100,7 @@
 
 .description-conainter textarea {
     width: 100%;
-    height: 108px;
+    min-height: 108px;
     border-radius: 4px;
     background: rgba(0,0,0,.03);
     border-color: rgba(0,0,0,.15);

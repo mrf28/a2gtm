@@ -43,7 +43,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     this._ws.onColumnAdd.subscribe(column => {
       console.log('adding column from server');
       this.board.columns.push(column);
-      this.updateBoardWidth();
     });
 
     this._ws.onCardAdd.subscribe(card => {
@@ -83,8 +82,9 @@ export class BoardComponent implements OnInit, OnDestroy {
         placeholder: "column-placeholder",
         dropOnEmpty: true,
         tolerance: 'pointer',
+        helper : 'clone',
         start: function (event, ui) {
-          ui.placeholder.height(ui.item.find('.column').outerHeight());
+          ui.placeholder.height(ui.item.height());
           startColumn = ui.item.parent();
         },
         stop: function (event, ui) {
@@ -97,11 +97,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       }).disableSelection();
 
       //component.bindPane();;
-
-      window.addEventListener('resize', function (e) {
-        component.updateBoardWidth();
-      });
-      component.updateBoardWidth();
       document.getElementById('content-wrapper').style.backgroundColor = '';
     }, 100);
   }
@@ -125,24 +120,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     el.addEventListener('mouseup', function (e) {
       curDown = false;
     });
-  }
-
-  updateBoardWidth() {
-    // this.boardWidth = ((this.board.columns.length + (this.columnsAdded > 0 ? 1 : 2)) * 280) + 10;
-    this.boardWidth = ((this.board.columns.length + 1) * 280) + 10;
-
-    if (this.boardWidth > document.body.scrollWidth) {
-      document.getElementById('main').style.width = this.boardWidth + 'px';
-    } else {
-      document.getElementById('main').style.width = '100%';
-    }
-
-    if (this.columnsAdded > 0) {
-      let wrapper = document.getElementById('content-wrapper');
-      wrapper.scrollLeft = wrapper.scrollWidth;
-    }
-
-    this.columnsAdded++;
   }
 
   updateBoard() {
@@ -230,16 +207,20 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   addColumn() {
+    let lastOrder = 0;
+    
+    if (this.board.columns.length){
+      lastOrder = this.board.columns[this.board.columns.length-1].order;
+    }
+
     let newColumn = <Column>{
       title: this.addColumnText,
-      order: (this.board.columns.length + 1) * 1000,
+      order: lastOrder + 1000,
       boardId: this.board._id
     };
     this._columnService.post(newColumn)
       .subscribe(column => {
-        this.board.columns.push(column)
         console.log('column added');
-        this.updateBoardWidth();
         this.addColumnText = '';
         this._ws.addColumn(this.board._id, column);
       });

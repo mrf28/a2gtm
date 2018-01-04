@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, ElementRef, ChangeDetectorRef, NgZone} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ElementRef, NgZone} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Card} from '../card/card';
 import {Column} from '../column/column';
@@ -20,7 +20,6 @@ export class CardDetailComponent implements OnInit {
   constructor(private el: ElementRef,
     private route: ActivatedRoute,
     private router: Router,
-    private _ref: ChangeDetectorRef,
     private _ws: WebSocketService,
     private _cardService: CardService) {
   }
@@ -38,9 +37,9 @@ export class CardDetailComponent implements OnInit {
     });
   }
 
-  blurOnEnterTitle(event) {
-    if (event.keyCode === 13) {
-      event.target.blur();
+  blurOnEnterTitle(event: KeyboardEvent) {
+    if (event.key === "Enter") {
+      (<HTMLElement>event.target).blur();
     } else if (event.keyCode === 27) {
       this.card.title = this.currentTitle;
       this.editingCard = false;
@@ -51,10 +50,10 @@ export class CardDetailComponent implements OnInit {
     this.editingCard = true;
     this.currentTitle = this.card.title;
 
-    let textArea = this.el.nativeElement.getElementsByTagName('textarea')[0];
+    let input = this.el.nativeElement.getElementsByTagName('input')[0];
 
     setTimeout(function() {
-      textArea.focus();
+      input.focus();
     }, 0);
   }
 
@@ -80,18 +79,19 @@ export class CardDetailComponent implements OnInit {
   }
   
   adjustHeight(event: Event){
-    let el = <HTMLElement>event.srcElement;
+    let el = <HTMLElement>event.target;
     this.adjustTextAreaHeight(el);
   }
 
   adjustTextAreaHeight(el: HTMLElement){
     el.style.height = '0';
+    let minheight = parseFloat(window.getComputedStyle(el, null).minHeight);
     let height = el.scrollHeight + 4;
-    if (height >= 108){
+    if (height >= minheight){
       if (el.style.height != (height + 'px'))
         el.style.height = height + 'px';
     } else {
-        el.style.height = height + '108px';
+        el.style.height = minheight +'px';
     }
   }
 

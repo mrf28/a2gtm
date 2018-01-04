@@ -47,18 +47,22 @@ export class WebSocketService {
   }
 
   addColumn(boardId:string, column: Column){
+    this.onColumnAdd.emit(column);
     this.socket.emit('addColumn', { boardId: boardId, column: column });
   }
 
   addCard(boardId: string, card: Card) {
+    this.onCardAdd.emit(card);
     this.socket.emit('addCard', { boardId: boardId, card: card });
   }
 
   updateColumn(boardId: string, column: Column) {
+    this.onColumnUpdate.emit(column);
     this.socket.emit('updateColumn', { boardId: boardId, column: column });
   }
 
   updateCard(boardId: string, card: Card) {
+    this.onCardUpdate.emit(card);
     this.socket.emit('updateCard', { boardId: boardId, card: card });
   }
 }

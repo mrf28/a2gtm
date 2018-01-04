@@ -55,20 +55,17 @@ li.card-placeholder {
 }
 
 .column-placeholder {
-      width: 280px;
-    height: 280px;
-    background-color: #0067A3;
-  border-radius: 3px; 
-  width: 270px;
-  margin-left: 10px;
-  box-sizing: border-box;
-  display: inline-block;
-  vertical-align: top;
-  white-space: nowrap;
+  height: 280px;
+  flex: 0 0 280px;
 }
 
-#main > div {
-  float: left;
+.column-placeholder::before {
+  content: ' ';
+  height: 100%;
+  background-color: #0067A3;
+  border-radius: 3px; 
+  width: 270px;
+  display: block; 
 }
 
 .no-hilight:active, .no-hilight:focus {

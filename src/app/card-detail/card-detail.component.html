@@ -3,16 +3,16 @@
     <div class="detail-container"  (click)="stopPropagation($event)" >
         <span class="close-btn" (click)="close($event)"></span>
         <div class="title-container">
+            <i class="fa fa-credit-card fa-flip-vertical top-icon"></i>
             <span class="title"
                 (click)="editTitle()" 
                 [innerHtml]="card.title" 
                 [style.display]="editingCard ? 'none' : ''">
             </span>
-            <textarea [style.display]="editingCard ? '' : 'none' " 
-                (keydown)="blurOnEnterTitle()" 
+            <input type="text" class="no-hilight" [style.display]="editingCard ? '' : 'none' " 
+                (keydown)="blurOnEnterTitle($event)" 
                 (blur)="updateTitle()" 
-                [(ngModel)]="card.title">
-            </textarea>
+                [(ngModel)]="card.title" />
         </div>
         <div class="main-container">
             <div class="main">

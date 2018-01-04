@@ -32,5 +32,4 @@ export class DashboardComponent implements OnInit {
         console.log('new board added');
     });
   }
-
 }

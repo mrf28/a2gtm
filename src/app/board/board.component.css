@@ -1,8 +1,13 @@
 
 #main {
   min-width: 100%;
-  /*height: calc(100% - 90px);*/
-  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0 10px 20px;
+}
+
+#main > div {
+  flex: 0 0 280px;
 }
 
 .board-title {
@@ -32,11 +37,9 @@
 .add-column {
   width: 280px;
   height: 40px;
-  background-color: #0067A3;
   border-radius: 3px; 
   width: 270px;
-  margin-left: 10px;
-  padding: 2px;
+  padding: 0;
   box-sizing: border-box;
   display: inline-block;
   vertical-align: top;
@@ -49,15 +52,20 @@
 	color: rgba(255,255,255,.7);
 	line-height: 40px;
 	vertical-align: middle;
-	padding: 7px;
+	padding: 0 7px;
 	font-size: 14px;
   cursor: pointer;
   cursor: hand;
+  background-color: #0067A3;
+  width: 270px;
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 3px;
 }
 
 .add-column input {	
-	width: 260px;
-	height: 33px;
+  width: 270px;
+  height: 40px;
 	font-weight: 700;
 	border: none;
 	line-height: 18px;
